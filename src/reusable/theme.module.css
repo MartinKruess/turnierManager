@@ -1,0 +1,20 @@
+.themeSection{
+    padding: 3rem 18rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+}
+
+.theme{
+    width: 15rem;
+}
+
+.theme:hover{
+    scale: 1.1;
+    border: solid red;
+}
+
+.theme img{
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,80 @@
+#root {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ------ ABC ------ */
+
+body{
+  background-color: #242628;
+}
+
+nav{
+  background-color: #ededed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-left: 0.9rem;
+}
+
+nav a{
+  margin: 3rem 0;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.navBig{
+  width: 100%;
+}
+
+.navBig div{
+  width: 15rem;
+  height: 15rem;
+}
+
+.navSmall{
+  width: 10rem;
+}
+
+.navSmall div{
+  width: 9rem;
+  height: 9rem;
+  margin: 3.5rem 0;
+}
+
+/* nav div:hover{
+  box-shadow:
+  0.1rem 0.1rem 0.3rem red,
+  -0.1rem -0.1rem 0.3rem red,
+  -0.1rem 0.1rem 0.3rem red,
+  0.1rem -0.1rem 0.3rem red;
+} */
+
+nav div img{
+  width: 100%;
+  object-fit: cover;
+}
+
+.rlContainer{
+  background-color: #ededed;
+}
+
+.active{
+  box-shadow:
+  0.1rem 0.1rem 0.3rem red,
+  -0.1rem -0.1rem 0.3rem red,
+  -0.1rem 0.1rem 0.3rem red,
+  0.1rem -0.1rem 0.3rem red;
+}
