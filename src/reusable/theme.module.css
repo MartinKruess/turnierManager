@@ -1,12 +1,15 @@
 .themeSection{
-    padding: 3rem 18rem;
+    padding: 3rem 9rem;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 5rem;
 }
 
 .theme{
     width: 15rem;
+    height: 15rem;
 }
 
 .theme:hover{

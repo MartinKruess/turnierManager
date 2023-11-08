@@ -11,70 +11,37 @@
   box-sizing: border-box;
 }
 
-/* ------ ABC ------ */
-
 body{
   background-color: #242628;
 }
 
 nav{
-  background-color: #ededed;
+  background-color: #323538;
+  width: 12rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  align-items: center;
+  gap: 1rem;
   position: fixed;
   top: 0;
   left: 0;
-  padding-left: 0.9rem;
+  font-size: 1.4rem;
+  padding: 1rem 0;
 }
 
-nav a{
-  margin: 3rem 0;
-  border-radius: 2rem;
-  overflow: hidden;
+nav div{
+  width: 90%;
 }
 
-.navBig{
-  width: 100%;
-}
-
-.navBig div{
-  width: 15rem;
-  height: 15rem;
-}
-
-.navSmall{
-  width: 10rem;
-}
-
-.navSmall div{
-  width: 9rem;
-  height: 9rem;
-  margin: 3.5rem 0;
-}
-
-/* nav div:hover{
-  box-shadow:
-  0.1rem 0.1rem 0.3rem red,
-  -0.1rem -0.1rem 0.3rem red,
-  -0.1rem 0.1rem 0.3rem red,
-  0.1rem -0.1rem 0.3rem red;
-} */
-
-nav div img{
-  width: 100%;
-  object-fit: cover;
-}
-
-.rlContainer{
-  background-color: #ededed;
+nav div a{
+  color: #ededed;
+  display: block;
+  text-decoration: none;
+  padding: 0.1rem 0;
 }
 
 .active{
-  box-shadow:
-  0.1rem 0.1rem 0.3rem red,
-  -0.1rem -0.1rem 0.3rem red,
-  -0.1rem 0.1rem 0.3rem red,
-  0.1rem -0.1rem 0.3rem red;
+  background-color: #242628;
+  /* border: solid 1px; */
 }
