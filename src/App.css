@@ -45,3 +45,27 @@ nav div a{
   background-color: #242628;
   /* border: solid 1px; */
 }
+
+.tableContainer{
+  display: flex;
+  justify-content: center;
+}
+
+.pair{
+  width: 14rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.4rem 0.3rem;
+  border: solid 1px #ccc;
+}
+
+.team{
+  width: 11.3rem;
+  font-size: 1.2rem;
+}
+
+.pair input{
+  width: 1.7rem;
+  text-align: center;
+  padding: 0.2rem 0;
+}
