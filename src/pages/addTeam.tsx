@@ -1,25 +1,49 @@
-import { useContext, useEffect, useState } from "react"
-import { TablePair } from "../comps/tablePair"
-import { createTeam } from "../comps/createTeam"
-import { TeamsContext } from "../global/teamProvider"
+import { useContext, useEffect} from "react"
+import { TurnierContext } from "../global/turnierProvider"
+import { TeamPreview } from "../comps/teamPreview"
 
 
 export const AddTeam = () => {
-    const {teams, setTeams} = useContext(TeamsContext)
+    const {turnierData, setTurnierData} = useContext(TurnierContext)
 
     useEffect(()=>{    
-        console.log(teams)
-    }, [teams])
+        console.log(turnierData)
+    }, [turnierData])
 
-// const arr = [
-//     {teamName: "Team1", player1: "a", player2: "b"},
-//     {teamName: "Team2",  player1: "a", player2: "b"}, {teamName: "Team3", player1: "a", player2: "b" }, {teamName: "Team4", player1: "a", player2: "b" }, {teamName: "Team5", player1: "a", player2: "b" }, {teamName: "Team6", player1: "a", player2: "b" }, {teamName: "Team7", player1: "a", player2: "b" },
-//     {teamName: "Team8", player1: "a", player2: "b" },
-//     {teamName: "Team1", player1: "a", player2: "b"},
-//     {teamName: "Team2",  player1: "a", player2: "b"}, {teamName: "Team3", player1: "a", player2: "b" }, {teamName: "Team4", player1: "a", player2: "b" }, {teamName: "Team5", player1: "a", player2: "b" }, {teamName: "Team6", player1: "a", player2: "b" }, {teamName: "Team7", player1: "a", player2: "b" },
-//     {teamName: "Team8", player1: "a", player2: "b" },
-// ]
-// arr.sort(() => Math.random() - 0.5)
+
+    const createTeam = (e: React.FormEvent) => {
+        e.preventDefault()
+        const formElement = e.target as HTMLFormElement;
+    
+        const newTeam = {
+            teamName: formElement.teamName.value,
+            player1: {
+                playerName: formElement.playerName1.value,
+                playerRank: formElement.playerRank1.value,
+                goals: 0,
+                assists: 0,
+                defs: 0,
+            },
+            player2: {
+                playerName: formElement.playerName2.value,
+                playerRank: formElement.playerRank2.value,
+                goals: 0,
+                assists: 0,
+                defs: 0,
+            },
+            player3: {
+                playerName: formElement.playerName3.value,
+                playerRank: formElement.playerRank3.value,
+                goals: 0,
+                assists: 0,
+                defs: 0,
+            }
+        }
+        setTurnierData({...turnierData, teams: [...turnierData.teams, newTeam]})
+    }
+
+    // const currentTeams = [...teams]
+// currentTeams.sort(() => Math.random() - 0.5)
 
 // const teamPairs = [];
 // let t = 2
@@ -38,15 +62,18 @@ export const AddTeam = () => {
 
 //onSubmit={() => turnierData}
     return (
-        <main>
-            <form className="newTeam" onSubmit={(e) => createTeam(e, teams)}>
+        <main className="teamSection">
+            <form className="newTeam" onSubmit={(e) => createTeam(e)}>
                 <input type="text" name="teamName" placeholder="Teamname" />
                 <input type="text" name="playerName1" className="formSpace" placeholder="Playername 1" />
                 <input type="text" name="playerRank1" placeholder="Playerrank 1" />
                 <input type="text" name="playerName2" className="formSpace" placeholder="Playername 2" />
                 <input type="text" name="playerRank2" placeholder="Playerrank 2" />
+                <input type="text" name="playerName3" className="formSpace" placeholder="Playername 3" />
+                <input type="text" name="playerRank3" placeholder="Playerrank 3" />
                 <button type="submit">Team anlegen</button>
             </form>
+            <TeamPreview />
             {/* <article className="tableContainer">
                 {teamPairs.map((teams, i) => <TablePair key={i} />)}
             </article> */}

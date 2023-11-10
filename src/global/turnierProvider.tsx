@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react"
+import { createContext, useState } from "react"
 import { ProviderProps } from "./types";
 
 // interface Team {
@@ -11,17 +11,17 @@ import { ProviderProps } from "./types";
 //     teams: Team[],
 // }
 
-export const TeamsContext = createContext<any>(null)
+export const TurnierContext = createContext<any>(null)
 
-export const TeamProvider:React.FC<ProviderProps> = ({children}) => {
-    const [teams, setTeams] = useState([])
-
-    console.log("context", teams)
-    console.log("TEAMS", teams)
+export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
+    const [turnierData, setTurnierData] = useState({
+        turnier: {},
+        teams: []
+    })
 
     return(
-        <TeamsContext.Provider value={{teams, setTeams}}>
+        <TurnierContext.Provider value={{turnierData, setTurnierData}}>
             {children}
-        </TeamsContext.Provider>
+        </TurnierContext.Provider>
     )
 }

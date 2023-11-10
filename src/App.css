@@ -16,6 +16,7 @@ body{
 }
 
 main{
+  min-height: 94vh;
   display: flex;
   justify-content: center;
   margin-left: 12rem;
@@ -126,8 +127,40 @@ form button:hover{
 
 /* Create New Team Form */
 
+.teamSection{
+  justify-content: space-between;
+  padding: 2rem 5rem 2rem 10rem;
+}
+
 .newTeam{
   width: 20rem;
+}
+
+.teamPreview{
+  background-color:#1f1f1f;
+  width: 30rem;
+  height: min-content;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  border: solid 0.1rem #cccccc22;
+}
+
+.teamPreview p{
+  background-color: #ededed;
+  color: #242628;
+  width: 13.5rem;
+  height: 2rem;
+  border: solid 0.1rem #cccccc33;
+  box-shadow:
+  inset 1px 1px 6px #000000,
+  inset -1px -1px 6px #000000,
+  inset -1px 1px 6px #000000,
+  inset 1px -1px 6px #000000;
 }
 
 
