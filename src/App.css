@@ -15,6 +15,12 @@ body{
   background-color: #242628;
 }
 
+main{
+  display: flex;
+  justify-content: center;
+  margin-left: 12rem;
+}
+
 nav{
   background-color: #323538;
   width: 12rem;
@@ -46,26 +52,109 @@ nav div a{
   /* border: solid 1px; */
 }
 
+/* Form */
+
+form{
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+label{
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 2rem;
+}
+
+form input{
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+form input[type="number"]{
+  width: 6rem
+}
+
+form input[type="date"]{
+  width: 15rem;
+  margin: 0.6rem auto;
+}
+
+form input[type="text"], form input[type="number"], form input[type="date"]{
+  border: none;
+  box-shadow: 
+  inset -1px -1px 3px #1f1f1f,
+  inset 2px 2px 3px #000000,
+  inset -1px 1px 3px #000000,
+  inset 1px -1px 3px #000000;
+}
+
+form input[type="text"]:focus,  form input[type="number"]:focus, form input[type="date"]:focus{
+  border: none;
+  outline-style: groove;
+  outline-color: #ff0000;
+  outline-width: 0.2rem;
+}
+
+form input[type="text"],  form input[type="number"], form input[type="date"], form button{
+  background-color: #323538;
+  color: #ccc;
+  font-size: 1.6rem;
+  text-align: center;
+  border-radius: 0.8rem;
+}
+
+input[type="checkbox"], input[type="radio"]{
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+form button{
+  padding: 0.5rem;
+}
+
+form button, .newTeam .formSpace{
+  margin-top: 1.2rem;
+}
+
+form button:hover{
+  border: solid red 0.1rem;
+}
+
+
+/* Create New Team Form */
+
+.newTeam{
+  width: 20rem;
+}
+
+
+/* TurnierTable */
+
 .tableContainer{
   display: flex;
   justify-content: center;
 }
 
 .pair{
-  width: 14rem;
+  width: 12rem;
   display: flex;
   flex-wrap: wrap;
   padding: 0.4rem 0.3rem;
+  margin: 2rem 0.5rem;
   border: solid 1px #ccc;
 }
 
 .team{
-  width: 11.3rem;
-  font-size: 1.2rem;
+  width: 9.5rem;
+  font-size: 1.1rem;
 }
 
 .pair input{
   width: 1.7rem;
+  height: 1.4rem;
   text-align: center;
   padding: 0.2rem 0;
 }

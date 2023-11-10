@@ -18,6 +18,12 @@ export const Navi = () => {
         <img src={'./' + theme + '-logo.png'} alt="" onClick={() => setTheme('')}/>
       </div>
       <div>
+        <NavLink to="/">Neues Turnier</NavLink>
+      </div>
+      <div>
+        <NavLink to="/addTeam">Add Team</NavLink>
+      </div>
+      <div>
         <NavLink to="/open">Offene Turniere</NavLink>
       </div>
       <div>

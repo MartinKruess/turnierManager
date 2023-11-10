@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import { Landingpage } from "../pages/landingpage";
+import { AddTeam } from "../pages/addTeam";
+import { NewTurnier } from "../pages/newTurnier";
 
 export const router = createBrowserRouter([
   {
@@ -9,23 +10,27 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Landingpage />
+        element: <NewTurnier />
+      },
+      {
+        path: "/addTeam",
+        element: <AddTeam />
       },
       {
         path: "/open",
-        element: <Landingpage />
+        element: <NewTurnier />
       },
       {
         path: "/history",
-        element: <Landingpage />
+        element: <NewTurnier />
       },
       {
         path: "/team-stats",
-        element: <Landingpage />
+        element: <NewTurnier />
       },
       {
         path: "/player-stats",
-        element: <Landingpage />
+        element: <NewTurnier />
       },
     ]
   },
