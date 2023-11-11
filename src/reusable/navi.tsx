@@ -5,12 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 export const Navi = () => {
   const { theme, setTheme } = useContext(ThemeContext)
-  console.log(theme)
-
-
-  //className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}
-
-  //className={isActive => isActive ? "active" : "pending"}
 
   return (
     <nav>

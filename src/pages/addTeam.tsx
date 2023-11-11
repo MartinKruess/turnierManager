@@ -7,7 +7,7 @@ export const AddTeam = () => {
     const {turnierData, setTurnierData} = useContext(TurnierContext)
 
     useEffect(()=>{    
-        console.log(turnierData)
+        localStorage.setItem('turnierData', JSON.stringify(turnierData))
     }, [turnierData])
 
 
@@ -39,7 +39,7 @@ export const AddTeam = () => {
                 defs: 0,
             }
         }
-        setTurnierData({...turnierData, teams: [...turnierData.teams, newTeam]})
+        turnierData.teams.length < 32 && setTurnierData({...turnierData, teams: [...turnierData.teams, newTeam]})
     }
 
     // const currentTeams = [...teams]
@@ -63,7 +63,8 @@ export const AddTeam = () => {
 //onSubmit={() => turnierData}
     return (
         <main className="teamSection">
-            <form className="newTeam" onSubmit={(e) => createTeam(e)}>
+            {turnierData.teams.length === 32 ? (<h2>Das Turnier ist voll!</h2>)
+            : (<form className="newTeam" onSubmit={(e) => createTeam(e)}>
                 <input type="text" name="teamName" placeholder="Teamname" />
                 <input type="text" name="playerName1" className="formSpace" placeholder="Playername 1" />
                 <input type="text" name="playerRank1" placeholder="Playerrank 1" />
@@ -72,7 +73,7 @@ export const AddTeam = () => {
                 <input type="text" name="playerName3" className="formSpace" placeholder="Playername 3" />
                 <input type="text" name="playerRank3" placeholder="Playerrank 3" />
                 <button type="submit">Team anlegen</button>
-            </form>
+            </form>)}
             <TeamPreview />
             {/* <article className="tableContainer">
                 {teamPairs.map((teams, i) => <TablePair key={i} />)}

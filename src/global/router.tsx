@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import { AddTeam } from "../pages/addTeam";
 import { NewTurnier } from "../pages/newTurnier";
+import { TurnierListContainer } from "../pages/turnierListContainer";
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/open",
-        element: <NewTurnier />
+        element: <TurnierListContainer />
       },
       {
         path: "/history",

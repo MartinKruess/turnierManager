@@ -7,9 +7,10 @@ export const NewTurnier = () => {
 
 
     useEffect(() => {
-        console.log(turnierData)
         localStorage.setItem('turnierData', JSON.stringify(turnierData))
-    }, [rounds, turnierData])
+    }, [turnierData])
+    
+    useEffect(() => {}, [rounds])
 
     const roundHandler = (e: React.FormEvent) => {
         e.preventDefault()
@@ -38,7 +39,9 @@ export const NewTurnier = () => {
 
     return(
         <main>
-        <form onSubmit={(e) => submitHandler(e)}>
+        {turnierData.turnier.turnierName
+        ? (<h2>Die Erstellung des Turniers läuft noch!</h2>)
+        : (<form onSubmit={(e) => submitHandler(e)}>
             <input type="text" placeholder="Name des Turniers" name="turnierName" />
             <label htmlFor="startDate">Start des Turniers
                 <input type="date" name="" id="startDate" />
@@ -64,7 +67,8 @@ export const NewTurnier = () => {
             <input type="number" name="" id="bestOf" onChange={(e) => roundHandler(e)} value={rounds} />
             </label>
             <button type="submit">Turnier erstellen</button>
-        </form>
+        </form>)
+        }
         </main>
     )
 }

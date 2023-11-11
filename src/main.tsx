@@ -10,11 +10,11 @@ import { TurnierProvider } from './global/turnierProvider.tsx';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <TurnierProvider>
-    <TeamProvider>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </TeamProvider>
+      <TeamProvider>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </TeamProvider>
     </TurnierProvider>
   </React.StrictMode>,
 )
