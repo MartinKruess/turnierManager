@@ -11,6 +11,25 @@ interface Teams {
     teams: Team[],
 }
 
+    // const currentTeams = [...teams]
+// currentTeams.sort(() => Math.random() - 0.5)
+
+// const teamPairs = [];
+// let t = 2
+// const createPairs = () => {
+//     for (let i = 0; i < arr.length; i += t) {
+//         if( arr[i + 1]){
+//             teamPairs.push([arr[i], arr[i + 1]]);
+//         }else{
+//             teamPairs.push([arr[i]]);
+//             t = t*2
+//         }
+//     }
+// }
+
+// console.log(teamPairs)
+//onSubmit={() => turnierData}
+
 export const TablePair: React.FC<Teams> = () => {
     const {teams, setTeams} = useContext(TeamsContext)
     console.log("TEAMS:", teams)

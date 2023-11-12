@@ -1,25 +1,20 @@
 import { useContext, useEffect, useState } from "react"
-import { TurnierContext } from "../global/turnierProvider"
+import { AllTurniersContext, AllTurniersType, TurnierDataType } from "../global/turnierProvider"
 
 export const TurnierList = () => {
-    // const [allTurniers, setAllTurniers] = useState([])
-    // const {turnierData} = useContext(TurnierContext)
+    const {allTurniers, setAllTurniers} = useContext(AllTurniersContext)
 
-    // useEffect(() => {
-
-    // }, [allTurniers])
-
-    // localStorage.getItem(turnierData) && setAllTurniers([...allTurniers, localStorage.getItem(turnierData)])
+    useEffect(() => {console.log("ALL", allTurniers)}, [allTurniers])
 
     return (
         <section>
-            {/* {allTurniers.map((turnier, i) => {
+            {allTurniers.map((turnier: TurnierDataType, i: number) => {
                 return(
                     <article key={i}>
                         {turnier.turnierName}
                     </article>
                 )
-            })} */}
+            })}
         </section>
     )
 }
