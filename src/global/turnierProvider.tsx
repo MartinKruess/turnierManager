@@ -40,6 +40,7 @@ export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
         try {
             const turnierDataLS: TurnierDataType = JSON.parse(turnierDataStr);
             console.log("controll", turnierDataLS)
+            console.log("TurnierData", turnierData)
             setTurnierData(turnierDataLS);
         } catch (error) {
             console.error('Error parsing turnierData from localStorage:', error);
