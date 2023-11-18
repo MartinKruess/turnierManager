@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from "react"
 import { TurnierContext } from "../global/turnierProvider"
+import { TurnierDataType } from "../global/types"
 
 export const NewTurnier = () => {
     const [rounds, setRounds] = useState(1)
-    const {turnierData, setTurnierData} = useContext(TurnierContext)
-
+    const {turnierData, setTurnierData}: TurnierDataType = useContext(TurnierContext)
+    console.log(turnierData)
 
     useEffect(() => {
         localStorage.setItem('turnierData', JSON.stringify(turnierData))
@@ -32,9 +33,9 @@ export const NewTurnier = () => {
             bestOf: Number(formElement.bestOf.value),
             status: true,
         }
-        if(!turnierData[0])[
+        if(!turnierData[0]){
             setTurnierData({...turnierData, turnier: turnier})
-        ]
+        }
     }
 
     return(

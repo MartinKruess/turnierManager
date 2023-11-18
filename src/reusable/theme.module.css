@@ -1,10 +1,33 @@
 .themeSection{
-    padding: 3rem 9rem;
-    display: flex;
+    height: 90vh;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 1fr repeat(3, 15rem) 1fr;
+    grid-template-rows: 1fr 15rem 15rem 1fr;
+    margin: auto;
     gap: 5rem;
+}
+
+#box1{
+    grid-area: 2/2/3/3;
+}
+#box2{
+    grid-area: 2/3/3/4;
+}
+#box3{
+    grid-area: 2/4/3/5;
+}
+#box4{
+    grid-area: 3/2/4/3;
+}
+#box5{
+    grid-area: 3/3/4/4;
+}
+#box6{
+    grid-area: 3/4/4/5;
 }
 
 .theme{

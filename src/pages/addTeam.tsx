@@ -1,16 +1,19 @@
 import { useContext, useEffect} from "react"
 import { AllTurniersContext, TurnierContext } from "../global/turnierProvider"
 import { TeamPreview } from "../comps/teamPreview"
+import { AllTurniersType } from "../global/types"
 
 
 export const AddTeam = () => {
     const { turnierData, setTurnierData } = useContext(TurnierContext)
-    const { setAllTurniers } = useContext(AllTurniersContext)
+    const { allTurniers, setAllTurniers }: AllTurniersType = useContext(AllTurniersContext)
 
     useEffect(()=>{    
         localStorage.setItem('turnierData', JSON.stringify(turnierData))
     }, [turnierData])
     const teamsize = turnierData.turnier.teamsize
+
+    useEffect(() => {turnierData},[allTurniers])
 
 
     const createTeam = (e: React.FormEvent) => {
@@ -44,12 +47,21 @@ export const AddTeam = () => {
         turnierData.teams.length < 32 && setTurnierData({...turnierData, teams: [...turnierData.teams, newTeam]})
     }
 
-
-    
     const openTurnier = () => {
-        setAllTurniers(turnierData)
+        setAllTurniers([...allTurniers, turnierData])
+        setTurnierData({
+            turnier: {
+                turnierName: "",
+                playerStates: false,
+                startDate: new Date(),
+                teamsize: "",
+                status: false,
+                bestOf: 0,
+            },
+            teams: []
+        })
+        localStorage.removeItem('turnierData')
     }
-
 
     return (
         <main >
@@ -71,9 +83,10 @@ export const AddTeam = () => {
             </form>)}
             <TeamPreview />
             </section>
+            {turnierData.teams.length >= 8 &&
             <section>
-                <button title="Nach dem starten des Turnieres ist eine weitere bearbeitung nicht möglich!" onClick={() => openTurnier}>Turnier Starten</button>
-            </section>
+                <button title="Nach dem starten des Turnieres ist eine weitere bearbeitung nicht möglich!" onClick={() => openTurnier()}>Alle Teams eingetragen</button>
+            </section>}
             {/* <article className="tableContainer">
                 {teamPairs.map((teams, i) => <TablePair key={i} />)}
             </article> */}

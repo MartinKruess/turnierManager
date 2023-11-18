@@ -7,22 +7,22 @@ export const Theme = () => {
 
     return(
         <section className={styles.themeSection}>
-            <div className={styles.theme} onClick={() => setTheme('rl')}>
+            <div className={styles.theme} onClick={() => setTheme('rl')} id={styles.box1}>
                 <img src="./rl-logo.png" alt="" />
             </div>
-            <div className={styles.theme} onClick={() => setTheme('br')}>
+            <div className={styles.theme} onClick={() => setTheme('br')} id={styles.box2}>
                 <img src="./br-logo.png" alt="" />
             </div>
-            <div className={styles.theme} onClick={() => setTheme('fg')}>
-                <img src="./fg-logo.png" alt="" />
+            <div className={styles.theme} onClick={() => setTheme('csgo')} id={styles.box3}>
+                <img src="./csgo-logo.png" alt="" />
             </div>
-            <div className={styles.theme} onClick={() => setTheme('dbd')}>
-                <img src="./dbd-logo.gif" alt="" />
+            <div className={styles.theme} onClick={() => setTheme('dbd')} id={styles.box4}>
+                <img src="./dbd-logo.png" alt="" />
             </div>
-            <div className={styles.theme} onClick={() => setTheme('gt')}>
-                <img src="./gt-logo.png" alt="" />
+            <div className={styles.theme} onClick={() => setTheme('lol')} id={styles.box5}>
+                <img src="./lol-logo.png" alt="" />
             </div>
-            <div className={styles.theme} onClick={() => setTheme('new')}>
+            <div className={styles.theme} onClick={() => setTheme('new')} id={styles.box6}>
                 <img src="./new-logo.png" alt="" />
             </div>
         </section>
