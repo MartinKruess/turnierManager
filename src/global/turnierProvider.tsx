@@ -1,26 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { AllTurniersType, ProviderProps, TurnierDataType } from "./types";
-
-
+import { createContext, useContext, useState } from "react"
+import { AllTurnierDataType, AllTurniersType, ProviderProps, TurnierDataType } from "./types";
 
 export const TurnierContext = createContext<TurnierDataType | null >(null)
 export const AllTurniersContext = createContext<AllTurniersType | null >(null)
 
-// TEST Vllt hilft das ...
-// export const useTurnierData = () => {
-//     const contextValue = useContext(TurnierContext);
-//     if (!contextValue) {
-//       throw new Error("useTurnierData must be used within a TurnierProvider");
-//     }
-//     return contextValue;
-//   };
-
 export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
-    const [turnierData, setTurnierData] = useState<TurnierDataType>({
+    const [turnierData, setTurnierData] = useState<AllTurnierDataType>({
         turnier: {
             turnierName: "",
             playerStates: false,
-            startDate: new Date(),
+            startDate: "",
             teamsize: "",
             status: false,
             bestOf: 0,
@@ -32,7 +21,6 @@ export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
     const turnierDataStr = localStorage.getItem('turnierData')
         try {
             const turnierDataLS: TurnierDataType = JSON.parse(turnierDataStr);
-            turnierDataLS.turnier.startDate = new Date(turnierDataLS.turnier.startDate),
             console.log("LS", turnierDataLS)
             setTurnierData(turnierDataLS);
         } catch (error) {
@@ -47,16 +35,6 @@ export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
     )
 }
 
-// TEST Vllt hilft das ...
-// export const useAllTurniersData = () => {
-//     const contextValue = useContext(AllTurniersContext);
-//     if (!contextValue) {
-//       throw new Error("useTurnierData must be used within a TurnierProvider");
-//     }
-//     return contextValue;
-//   };
-
-
 export const AllTurniersProvider:React.FC<ProviderProps> = ({children}) => {
     const [allTurniers, setAllTurniers] = useState<AllTurniersType>([])
     const { turnierData } = useContext(TurnierContext)
@@ -70,6 +48,17 @@ export const AllTurniersProvider:React.FC<ProviderProps> = ({children}) => {
     //         console.error('Error parsing turnierData from localStorage:', error);
     //     }
     // }
+
+
+    if(!allTurniers[0] && localStorage.getItem('allTurniers')){
+        const turnierDataStr = localStorage.getItem('allTurniers')
+        try {
+            const allTurnierDataLS: TurnierDataType = JSON.parse(turnierDataStr);
+            setAllTurniers(allTurnierDataLS);
+        } catch (error) {
+            setAllTurniers([])
+        }
+    }
 
     return(
         <AllTurniersContext.Provider value={{allTurniers, setAllTurniers}}>

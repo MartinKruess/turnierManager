@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from "react"
 import { TurnierContext } from "../global/turnierProvider"
-import { TurnierDataType } from "../global/types"
+import { AllTurnierDataType, TurnierDataType } from "../global/types"
 
 export const NewTurnier = () => {
     const [rounds, setRounds] = useState(1)
-    const {turnierData, setTurnierData}: TurnierDataType = useContext(TurnierContext)
-    console.log(turnierData)
+    const {turnierData, setTurnierData} = useContext(TurnierContext)
 
     useEffect(() => {
         localStorage.setItem('turnierData', JSON.stringify(turnierData))
@@ -24,16 +23,20 @@ export const NewTurnier = () => {
     const submitHandler = (e: React.FormEvent) => {
         e.preventDefault()
         const formElement = e.target as HTMLFormElement;
-        console.log(formElement.teamsize.value)
+        const dateRaw = formElement.startDate.value
+        const dateArr = dateRaw.split("-").reverse()
+        const date = dateArr.join(".")
+
         const turnier = {
             turnierName: formElement.turnierName.value,
-            startDate: formElement.startDate.value,
+            startDate: date,
             teamsize: formElement.teamsize.value,
             playerStats: formElement.playerStats.checked,
             bestOf: Number(formElement.bestOf.value),
             status: true,
         }
         if(!turnierData[0]){
+            console.log(turnierData)
             setTurnierData({...turnierData, turnier: turnier})
         }
     }
@@ -48,13 +51,13 @@ export const NewTurnier = () => {
                 <input type="date" name="" id="startDate" required />
             </label>
             <label htmlFor="duo">Ones Turnier
-                <input type="radio" name="teamsize" value="ones" />
+                <input type="radio" name="teamsize" value="ones" required />
             </label>
             <label htmlFor="duo">Duo Turnier
-                <input type="radio" name="teamsize" value="duo" />
+                <input type="radio" name="teamsize" value="duo" required />
             </label>
             <label htmlFor="trio">Trio Turnier
-                <input type="radio" name="teamsize" value="trio" />
+                <input type="radio" name="teamsize" value="trio" required />
             </label>
             <label htmlFor="stats" title="Ermöglicht die Eingabe der erreichten Tore, Vorlagen und Paraden der einzelnen Spieler." >Spielerstatistik on/off
                 <input type="checkbox" name="playerStats" id="stats" />

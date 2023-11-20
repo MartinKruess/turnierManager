@@ -1,11 +1,11 @@
 import { useContext, useEffect} from "react"
 import { AllTurniersContext, TurnierContext } from "../global/turnierProvider"
 import { TeamPreview } from "../comps/teamPreview"
-import { AllTurniersType } from "../global/types"
+import { AllTurniersType, TurnierDataType } from "../global/types"
 
 
 export const AddTeam = () => {
-    const { turnierData, setTurnierData } = useContext(TurnierContext)
+    const { turnierData, setTurnierData }: TurnierDataType = useContext(TurnierContext)
     const { allTurniers, setAllTurniers }: AllTurniersType = useContext(AllTurniersContext)
 
     useEffect(()=>{    
@@ -22,6 +22,7 @@ export const AddTeam = () => {
     
         const newTeam = {
             teamName: formElement.teamName.value,
+            wins: 0,
             player1: {
                 playerName: formElement.playerName1.value,
                 playerRank: formElement.playerRank1.value,
@@ -53,7 +54,7 @@ export const AddTeam = () => {
             turnier: {
                 turnierName: "",
                 playerStates: false,
-                startDate: new Date(),
+                startDate: "",
                 teamsize: "",
                 status: false,
                 bestOf: 0,
@@ -61,35 +62,34 @@ export const AddTeam = () => {
             teams: []
         })
         localStorage.removeItem('turnierData')
+        localStorage.setItem('allTurniers', JSON.stringify(allTurniers))
     }
 
     return (
         <main >
-            <section className="teamSection">
-            {turnierData.teams.length === 32 ? (<h2>Das Turnier ist voll!</h2>)
-            : (<form className="newTeam" onSubmit={(e) => createTeam(e)}>
-                <input type="text" name="teamName" placeholder="Teamname" />
-                <input type="text" name="playerName1" className="formSpace" placeholder="Playername 1" />
-                <input type="text" name="playerRank1" placeholder="Playerrank 1" />
-                {(teamsize === 'duo' || teamsize === 'trio') && <>
-                    <input type="text" name="playerName2" className="formSpace" placeholder="Playername 2" />
-                    <input type="text" name="playerRank2" placeholder="Playerrank 2" />
-                </>}
-                {(teamsize === 'trio') && <>
-                    <input type="text" name="playerName3" className="formSpace" placeholder="Playername 3" />
-                    <input type="text" name="playerRank3" placeholder="Playerrank 3" />
-                </>}
-                <button type="submit">Team anlegen</button>
-            </form>)}
-            <TeamPreview />
-            </section>
-            {turnierData.teams.length >= 8 &&
-            <section>
-                <button title="Nach dem starten des Turnieres ist eine weitere bearbeitung nicht möglich!" onClick={() => openTurnier()}>Alle Teams eingetragen</button>
-            </section>}
-            {/* <article className="tableContainer">
-                {teamPairs.map((teams, i) => <TablePair key={i} />)}
-            </article> */}
+            {turnierData.turnier.turnierName ? (
+                <section className="teamSection">
+                    {turnierData.teams.length === 32 ? (<h2>Das Turnier ist voll!</h2>)
+                    : (<form className="newTeam" onSubmit={(e) => createTeam(e)}>
+                        <input type="text" name="teamName" placeholder="Teamname" />
+                        <input type="text" name="playerName1" className="formSpace" placeholder="Playername 1" />
+                        <input type="text" name="playerRank1" placeholder="Playerrank 1" />
+                        {(teamsize === 'duo' || teamsize === 'trio') && <>
+                            <input type="text" name="playerName2" className="formSpace" placeholder="Playername 2" />
+                            <input type="text" name="playerRank2" placeholder="Playerrank 2" />
+                        </>}
+                        {(teamsize === 'trio') && <>
+                            <input type="text" name="playerName3" className="formSpace" placeholder="Playername 3" />
+                            <input type="text" name="playerRank3" placeholder="Playerrank 3" />
+                        </>}
+                        <button type="submit">Team anlegen</button>
+                    </form>)}
+                    <TeamPreview />
+                </section>) : (<p>Um Teams für ein Turnier eintragen zu können muss erst ein neues Turnier angelegt werden.</p>)}
+                {turnierData.teams.length >= 8 &&
+                    <section>
+                        <button title="Nach dem starten des Turnieres ist eine weitere bearbeitung nicht möglich!" onClick={() => openTurnier()}>Alle Teams eingetragen</button>
+                    </section>}
         </main>
     )
 }

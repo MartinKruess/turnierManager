@@ -2,18 +2,26 @@ import { useContext, useEffect, useState } from "react"
 import { AllTurniersContext, TurnierContext } from "../global/turnierProvider"
 import { AllTurniersType, TurnierDataType } from "../global/types"
 
-export const TurnierList = () => {
+export const TurnierList = ({setTurnierIndex, setOpenturnier}) => {
     const {allTurniers}: AllTurniersType = useContext(AllTurniersContext)
 
     useEffect(() => {console.log("ALL", allTurniers)}, [allTurniers])
 
+    const showTurnier = (i: number) => {
+        setOpenturnier(true)
+        setTurnierIndex(i)
+    }
+
     return (
         <section className="turnierListContainer">
+            {/* <article className="tableContainer">
+                {teamPairs.map((teams, i) => <TablePair key={i} />)}
+            </article> */}
             <article className="topRow">
                         <div>Turniername</div>
                         <div>Teams</div>
                         <div>Teamgröße</div>
-                        <div>Rundenanzahl</div>
+                        <div>Best of</div>
                         <div>Startet am</div>
                         <div>Starten</div>
                     </article>
@@ -23,9 +31,9 @@ export const TurnierList = () => {
                         <div>{turnier.turnier.turnierName}</div>
                         <div>{turnier.teams.length}</div>
                         <div>{turnier.turnier.teamsize}</div>
-                        <div>{turnier.turnier.bestOf}</div>
+                        <div title="vor Viertelfinale / ab Viertelfinale">{turnier.turnier.bestOf}/{turnier.turnier.bestOf + 2}</div>
                         <div>{String(turnier.turnier.startDate)}</div>
-                        <div className="startBTN">Turnier Starten</div>
+                        <div className="startBTN" onClick={() => showTurnier(i)}>Turnier Starten</div>
                     </article>
                 )
             })}
