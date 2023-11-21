@@ -177,21 +177,31 @@ button:hover{
   width: 100%;
   display: flex;
   justify-content: center;
-  border: solid;
+  overFlow: auto;
 }
 
 .pair{
-  width: 12rem;
+  width: 13rem;
+  height: 5.3rem;
   display: flex;
   flex-wrap: wrap;
-  padding: 0.4rem 0.3rem;
-  margin: 2rem 0.5rem;
+  padding: 0.1rem;
+  margin: 1rem 0.3rem;
   border: solid 1px #ccc;
 }
 
 .team{
-  width: 9.5rem;
+  width: 100%;
   font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px;
+}
+
+.teamName{
+  width: 8rem;
+  border: solid 1px;
 }
 
 .pair input{
@@ -199,6 +209,11 @@ button:hover{
   height: 1.4rem;
   text-align: center;
   padding: 0.2rem 0;
+}
+
+.round1, .round2, .round3, .round4, .round5{
+  width: 100%;
+  border: solid;
 }
 
 /* Turnier overview */

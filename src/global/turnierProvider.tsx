@@ -1,11 +1,11 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { AllTurnierDataType, AllTurniersType, ProviderProps, TurnierDataType } from "./types";
 
 export const TurnierContext = createContext<TurnierDataType | null >(null)
 export const AllTurniersContext = createContext<AllTurniersType | null >(null)
 
-export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
-    const [turnierData, setTurnierData] = useState<AllTurnierDataType>({
+export const TurnierProvider: React.FC<ProviderProps> = ({children}) => {
+    const [turnierData, setTurnierData] = useState<TurnierDataType>({
         turnier: {
             turnierName: "",
             playerStates: false,
@@ -29,7 +29,7 @@ export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
     }
     
     return(
-        <TurnierContext.Provider value={{turnierData, setTurnierData}}>
+        <TurnierContext.Provider value={{turnierData, setTurnierData} as AllTurnierDataType}>
             {children}
         </TurnierContext.Provider>
     )
@@ -37,28 +37,12 @@ export const TurnierProvider:React.FC<ProviderProps> = ({children}) => {
 
 export const AllTurniersProvider:React.FC<ProviderProps> = ({children}) => {
     const [allTurniers, setAllTurniers] = useState<AllTurniersType>([])
-    const { turnierData } = useContext(TurnierContext)
-    
-    // if(!allTurniers[0].turnier.turnierName){
-    //     const allTurniersStr = localStorage.getItem('allTurniers')
-    //     try {
-    //         const allTurniersLS: TurnierDataType = JSON.parse(turnierDataStr);
-    //         setAllTurniers(allTurniersLS);
-    //     } catch (error) {
-    //         console.error('Error parsing turnierData from localStorage:', error);
-    //     }
-    // }
 
-
-    if(!allTurniers[0] && localStorage.getItem('allTurniers')){
+    useEffect(() => {
         const turnierDataStr = localStorage.getItem('allTurniers')
-        try {
-            const allTurnierDataLS: TurnierDataType = JSON.parse(turnierDataStr);
-            setAllTurniers(allTurnierDataLS);
-        } catch (error) {
-            setAllTurniers([])
-        }
-    }
+        const allTurnierDataLS: AllTurniersType = JSON.parse(turnierDataStr);
+        setAllTurniers(allTurnierDataLS);
+    }, [])
 
     return(
         <AllTurniersContext.Provider value={{allTurniers, setAllTurniers}}>

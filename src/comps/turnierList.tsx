@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from "react"
 import { AllTurniersContext, TurnierContext } from "../global/turnierProvider"
 import { AllTurniersType, TurnierDataType } from "../global/types"
 
-export const TurnierList = ({setTurnierIndex, setOpenturnier}) => {
+export const TurnierList = ({setIndex, setOpenTurnier}) => {
     const {allTurniers}: AllTurniersType = useContext(AllTurniersContext)
 
-    useEffect(() => {console.log("ALL", allTurniers)}, [allTurniers])
+    useEffect(() => {}, [allTurniers])
 
     const showTurnier = (i: number) => {
-        setOpenturnier(true)
-        setTurnierIndex(i)
+        setOpenTurnier(true)
+        setIndex(i)
     }
 
     return (
@@ -18,13 +18,13 @@ export const TurnierList = ({setTurnierIndex, setOpenturnier}) => {
                 {teamPairs.map((teams, i) => <TablePair key={i} />)}
             </article> */}
             <article className="topRow">
-                        <div>Turniername</div>
-                        <div>Teams</div>
-                        <div>Teamgröße</div>
-                        <div>Best of</div>
-                        <div>Startet am</div>
-                        <div>Starten</div>
-                    </article>
+                <div>Turniername</div>
+                <div>Teams</div>
+                <div>Teamgröße</div>
+                <div>Best of</div>
+                <div>Startet am</div>
+                <div>Starten</div>
+            </article>
             {allTurniers.map((turnier: TurnierDataType, i: number) => {
                 return(
                     <article key={i} className="row">

@@ -2,67 +2,85 @@ import { useContext, useEffect, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { AllTurniersType } from "../global/types";
 
-export const TurnierTable: React.FC<AllTurniersType> = () => {
+interface TurnierIndexProp {
+    index: number
+}
+
+export const TurnierTable: React.FC<TurnierIndexProp> = ({index}) => {
     const {allTurniers, setAllTurniers} = useContext(AllTurniersContext)
     const [teamPairs, setTeamPairs] = useState([])
-    const i = 0
-    const teams = allTurniers[i].teams
+    const teams = allTurniers[index].teams
     
     useEffect(() => {
-        // createPairs()
+        !teamPairs[0] && createPairs()
     }, [])
 
-    useEffect(() => {console.log(teamPairs);}, [teamPairs])
+    useEffect(() => {
+        console.log("Pairs", teamPairs)
+        //console.log("Pairs[0][0] -> pairs.map -> pair[0]", teamPairs[0][0])
+    }, [teamPairs])
 
     if(teams.length === 8 || teams.length === 16 || teams.length === 32){
         console.log("Lade Turnierbaum!")
-    }else if(teams.length > 8 && teams.length < 14){
+    }else if(teams.length > 8 && teams.length < 14 || teams.length > 16 && teams.length < 26){
         console.log("Vorrunde für top 8!")
     }else if(teams.length > 16 && teams.length < 26){
         console.log("Vorrunde für top 16!")
     }
 
-    // const teamsArr = [];
-    // let t = 2
-    // const createPairs = () => {
-    //     if(allTurniers[i]) {
-    //         const currentTeams = allTurniers[i].teams
-    //         currentTeams.sort(() => Math.random() - 0.5)
-    //         for (let i = 0; i < currentTeams.length; i += t) {
-    //             if( currentTeams[i + 1]){
-    //                 teamsArr.push([currentTeams[i], currentTeams[i + 1]]);
-    //             }else{
-    //                 teamsArr.push([currentTeams[i]]);
-    //                 t = t*2
-    //             }
-    //         }
-    //         setTeamPairs(teamsArr)
-    //     }
-        
-    // }
+    // Auslagern! behebt update Fehler
+    // mini setMini bool {{mini ? small : normal}}
+
+    const teamsArr = [];
+    let t = 2
+    const createPairs = () => {
+        if(allTurniers[index]) {
+            const currentTeams = allTurniers[index].teams
+            currentTeams.sort(() => Math.random() - 0.5)
+            for (let i = 0; i < currentTeams.length; i += t) {
+                if( currentTeams[i + 1]){
+                    teamsArr.push([currentTeams[i], currentTeams[i + 1]]);
+                }else{
+                    teamsArr.push([currentTeams[i]]);
+                    t = t*2
+                }
+            }
+            setTeamPairs(teamsArr)
+        }    
+    }
+
+    const updateWins = (e, pair, team) => {
+        setTeamPairs(teamPairs[pair][team].wins = e.target.value)
+    }
 
     return (<>
-       
+       {teamPairs[index] && <article className="tableContainer">
+         {teamPairs.map((teams, i) => (
+        <div key={i} className="pair">
+            {/* Erstes Team im Paar */}
+            <div className="team">
+                <p className="teamName">{teams[0].teamName}</p>
+                <p>{teams[0].wins}</p>
+                <input type="text" onChange={(e) => updateWins(e, i, 1)} />
+            </div>
+
+            {/* Zweites Team im Paar */}
+            {teams[1] &&
+            <>
+            <div className="team">
+                <p className="teamName">{teams[1].teamName}</p>
+                <p>{teams[1].wins}</p>
+                <input type="text" onChange={(e) => updateWins(e, i, 1)} />
+            </div>
+            </>
+            }
+        </div>
+        ))}
+    </article>}
     </>
     );
 
-    // {teamPairs[allTurniers[0].teams.length] && <article className="tableContainer">
-    //      {teamPairs.map((teams, i) => (
-    //     <div key={i} className="pair">
-    //         {/* Erstes Team im Paar */}
-    //         <div>Team 1: {teams[0].teamName}</div>
-    //         <div>Player 1: {teams[0].player1.playerName}</div>
-    //         <div>Player 2: {teams[0].player2.playerName}</div>
-    //         <div>Player 3: {teams[0].player3.playerName}</div>
-
-    //         {/* Zweites Team im Paar */}
-    //         <div>Team 2: {teams[1].teamName}</div>
-    //         <div>Player 1: {teams[1].player1.playerName}</div>
-    //         <div>Player 2: {teams[1].player2.playerName}</div>
-    //         <div>Player 3: {teams[1].player3.playerName}</div>
-    //     </div>
-    //     ))}
-    // </article>}
+    
 }
 
 
