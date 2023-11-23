@@ -17,6 +17,7 @@ export const TurnierList = ({setIndex, setOpenTurnier}) => {
             {/* <article className="tableContainer">
                 {teamPairs.map((teams, i) => <TablePair key={i} />)}
             </article> */}
+            
             <article className="topRow">
                 <div>Turniername</div>
                 <div>Teams</div>
@@ -25,18 +26,20 @@ export const TurnierList = ({setIndex, setOpenTurnier}) => {
                 <div>Startet am</div>
                 <div>Starten</div>
             </article>
-            {allTurniers.map((turnier: TurnierDataType, i: number) => {
-                return(
-                    <article key={i} className="row">
-                        <div>{turnier.turnier.turnierName}</div>
-                        <div>{turnier.teams.length}</div>
-                        <div>{turnier.turnier.teamsize}</div>
-                        <div title="vor Viertelfinale / ab Viertelfinale">{turnier.turnier.bestOf}/{turnier.turnier.bestOf + 2}</div>
-                        <div>{String(turnier.turnier.startDate)}</div>
-                        <div className="startBTN" onClick={() => showTurnier(i)}>Turnier Starten</div>
-                    </article>
-                )
-            })}
+            {allTurniers ? (
+                allTurniers.map((turnier: TurnierDataType, i: number) => {
+                    return(
+                        <article key={i} className="row">
+                            <div>{turnier.turnier.turnierName}</div>
+                            <div>{turnier.teams.length}</div>
+                            <div>{turnier.turnier.teamsize}</div>
+                            <div title="vor Viertelfinale / ab Viertelfinale">{turnier.turnier.bestOf}/{turnier.turnier.bestOf + 2}</div>
+                            <div>{String(turnier.turnier.startDate)}</div>
+                            <div className="startBTN" onClick={() => showTurnier(i)}>Turnier Starten</div>
+                        </article>
+                    )
+                })
+            ) : (<p>Es gibt aktuell keine offenen Turnier. Bitte lege zuerst ein Turnier an.</p>)}
         </section>
     )
 }

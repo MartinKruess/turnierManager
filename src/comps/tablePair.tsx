@@ -1,91 +1,83 @@
 import { useContext, useEffect, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { AllTurniersType } from "../global/types";
+import { GenerateTable } from "./generateTable";
 
 interface TurnierIndexProp {
-    index: number
+  index: number;
 }
 
-export const TurnierTable: React.FC<TurnierIndexProp> = ({index}) => {
-    const {allTurniers, setAllTurniers} = useContext(AllTurniersContext)
-    const [teamPairs, setTeamPairs] = useState([])
-    const teams = allTurniers[index].teams
-    
-    useEffect(() => {
-        !teamPairs[0] && createPairs()
-    }, [])
+export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
+  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
+  const [teamPairs, setTeamPairs] = useState(
+    [] || localStorage.getItem(JSON.parse("teamPairs"))
+  );
+  const turnier = allTurniers[index].turnier;
+  const teams = allTurniers[index].teams;
 
-    useEffect(() => {
-        console.log("Pairs", teamPairs)
-        //console.log("Pairs[0][0] -> pairs.map -> pair[0]", teamPairs[0][0])
-    }, [teamPairs])
+  useEffect(() => {
+    !teamPairs[0] && createPairs();
+  }, []);
 
-    if(teams.length === 8 || teams.length === 16 || teams.length === 32){
-        console.log("Lade Turnierbaum!")
-    }else if(teams.length > 8 && teams.length < 14 || teams.length > 16 && teams.length < 26){
-        console.log("Vorrunde für top 8!")
-    }else if(teams.length > 16 && teams.length < 26){
-        console.log("Vorrunde für top 16!")
+  useEffect(() => {
+    console.log("Pairs", teamPairs);
+    localStorage.setItem("teamPairs", JSON.stringify(teamPairs));
+  }, [teamPairs]);
+
+  if (
+    teams.length === 8 ||
+    (teams.length > 13 && teams.length <= 16) ||
+    (teams.length > 27 && teams.length <= 32)
+  ) {
+    console.log("Starte Turnier!");
+  } else if (
+    (teams.length > 8 && teams.length <= 13) ||
+    (teams.length > 16 && teams.length <= 27)
+  ) {
+    console.log("Starte Vorrunde!");
+  }
+
+  // Auslagern! behebt update Fehler
+  // mini setMini bool {{mini ? small : normal}}
+
+  let t = 2;
+  const createPairs = () => {
+    console.log("TeamPairs", teamPairs);
+    if (allTurniers[index] && !teamPairs[0]) {
+      const teamsArr = [];
+      const currentTeams = allTurniers[index].teams;
+      currentTeams.sort(() => Math.random() - 0.5);
+      console.log("Nach mixen", currentTeams);
+      for (let i = 0; i < currentTeams.length; i += t) {
+        if (currentTeams[i + 1]) {
+          console.log("if i", i, currentTeams[i], i + 1, currentTeams[i + 1]);
+          teamsArr.push([currentTeams[i], currentTeams[i + 1]]);
+        } else {
+          console.log("else i", i, [currentTeams[i]]);
+          teamsArr.push([currentTeams[i]]);
+          // t = t*2
+        }
+      }
+      setTeamPairs(teamsArr);
     }
+  };
 
-    // Auslagern! behebt update Fehler
-    // mini setMini bool {{mini ? small : normal}}
+  const updateWins = (e, pair, team) => {
+    teamPairs[pair][team].wins = e.target.value;
+    setTeamPairs([...teamPairs]);
+    const arr = teamPairs.filter((team) => team.wins > turnier.bestOf / 2);
+  };
 
-    const teamsArr = [];
-    let t = 2
-    const createPairs = () => {
-        if(allTurniers[index]) {
-            const currentTeams = allTurniers[index].teams
-            currentTeams.sort(() => Math.random() - 0.5)
-            for (let i = 0; i < currentTeams.length; i += t) {
-                if( currentTeams[i + 1]){
-                    teamsArr.push([currentTeams[i], currentTeams[i + 1]]);
-                }else{
-                    teamsArr.push([currentTeams[i]]);
-                    t = t*2
-                }
-            }
-            setTeamPairs(teamsArr)
-        }    
-    }
-
-    const updateWins = (e, pair, team) => {
-        setTeamPairs(teamPairs[pair][team].wins = e.target.value)
-    }
-
-    return (<>
-       {teamPairs[index] && <article className="tableContainer">
-         {teamPairs.map((teams, i) => (
-        <div key={i} className="pair">
-            {/* Erstes Team im Paar */}
-            <div className="team">
-                <p className="teamName">{teams[0].teamName}</p>
-                <p>{teams[0].wins}</p>
-                <input type="text" onChange={(e) => updateWins(e, i, 1)} />
-            </div>
-
-            {/* Zweites Team im Paar */}
-            {teams[1] &&
-            <>
-            <div className="team">
-                <p className="teamName">{teams[1].teamName}</p>
-                <p>{teams[1].wins}</p>
-                <input type="text" onChange={(e) => updateWins(e, i, 1)} />
-            </div>
-            </>
-            }
-        </div>
-        ))}
-    </article>}
+  return (
+    <>
+      {teamPairs[index] && (
+        <GenerateTable matches={teamPairs} updateWins={updateWins} />
+      )}
     </>
-    );
-
-    
-}
-
+  );
+};
 
 // -------------------------------- Versuch 2 --------------------------------
-
 
 // interface Team {
 //   teamName: string;

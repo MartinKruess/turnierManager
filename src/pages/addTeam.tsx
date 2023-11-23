@@ -10,10 +10,11 @@ export const AddTeam = () => {
 
     useEffect(()=>{    
         localStorage.setItem('turnierData', JSON.stringify(turnierData))
+        console.log("all",allTurniers)
     }, [turnierData])
     const teamsize = turnierData.turnier.teamsize
 
-    useEffect(() => {turnierData},[allTurniers])
+    useEffect(() => {localStorage.setItem('allTurniers', JSON.stringify(allTurniers))},[allTurniers])
 
 
     const createTeam = (e: React.FormEvent) => {
@@ -49,7 +50,11 @@ export const AddTeam = () => {
     }
 
     const openTurnier = () => {
-        setAllTurniers([...allTurniers, turnierData])
+        if(allTurniers === null) {
+            setAllTurniers([turnierData])
+        }else{
+            setAllTurniers([...allTurniers, turnierData])
+        }
         setTurnierData({
             turnier: {
                 turnierName: "",
