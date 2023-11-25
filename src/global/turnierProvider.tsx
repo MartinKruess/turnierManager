@@ -20,11 +20,11 @@ export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
       bestOf: 0,
     },
     teams: [],
-    round1: [],
-    round2: [],
-    round3: [],
-    round4: [],
-    round5: [],
+    round1: [1],
+    round2: [2],
+    round3: [3],
+    round4: [4],
+    round5: [5],
   });
 
   if (!turnierData.turnier) {

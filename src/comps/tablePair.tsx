@@ -12,67 +12,75 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const [teamPairs, setTeamPairs]: TeamType = useState(
     [] || localStorage.getItem(JSON.parse("teamPairs"))
   );
-  const [secondGames, setSecondGames] = useState([]);
-  const turnier = allTurniers[index].turnier;
-  const teams = allTurniers[index].teams;
+
+  // Data of the current Turnier
+  const currentTurnierInfo = allTurniers[index];
+  const currentTurnier = allTurniers[index].turnier;
+  const currentTeams = allTurniers[index].teams;
 
   useEffect(() => {
-    !teamPairs[0] && createPairs();
+    !currentTurnierInfo.round1[0] &&
+      createPairs(currentTurnierInfo.round1[0], currentTeams);
   }, []);
 
-  useEffect(() => {
-    console.log("Pairs", teamPairs);
-    localStorage.setItem("teamPairs", JSON.stringify(teamPairs));
-  }, [teamPairs]);
-
-  useEffect(() => {
-    console.log("SecondGames", secondGames);
-  }, [secondGames]);
-
-  if (
-    teams.length === 8 ||
-    (teams.length > 13 && teams.length <= 16) ||
-    (teams.length > 27 && teams.length <= 32)
-  ) {
-    console.log("Starte Turnier!");
-  } else if (
-    (teams.length > 8 && teams.length <= 13) ||
-    (teams.length > 16 && teams.length <= 27)
-  ) {
-    console.log("Starte Vorrunde!");
-  }
+  // useEffect(() => {
+  //   localStorage.setItem("teamPairs", JSON.stringify(teamPairs));
+  // }, [teamPairs]);
 
   // Auslagern! behebt update Fehler
   // mini setMini bool {{mini ? small : normal}}
 
-  let t = 2;
-  const createPairs = () => {
-    console.log("TeamPairs", teamPairs);
+  const createPairs = (nr, teams) => {
+    let t = 2;
     if (allTurniers[index] && !teamPairs[0]) {
       const teamsArr = [];
-      const currentTeams = allTurniers[index].teams;
-      currentTeams.sort(() => Math.random() - 0.5);
-      for (let i = 0; i < currentTeams.length; i += t) {
-        if (currentTeams[i + 1]) {
-          teamsArr.push([currentTeams[i], currentTeams[i + 1]]);
+      teams.sort(() => Math.random() - 0.5);
+      for (let i = 0; i < teams.length; i += t) {
+        if (teams[i + 1]) {
+          teamsArr.push([teams[i], teams[i + 1]]);
         } else {
-          teamsArr.push([currentTeams[i]]);
+          teamsArr.push([teams[i]]);
           // t = t*2
         }
       }
-      setTeamPairs(teamsArr);
+      if (nr === 1) {
+        setAllTurniers([
+          ...allTurniers,
+          (allTurniers[index].round1 = teamsArr),
+        ]);
+      } else if (nr === 2) {
+        setAllTurniers([
+          ...allTurniers,
+          (allTurniers[index].round2 = teamsArr),
+        ]);
+      } else if (nr === 3) {
+        setAllTurniers([
+          ...allTurniers,
+          (allTurniers[index].round3 = teamsArr),
+        ]);
+      } else if (nr === 4) {
+        setAllTurniers([
+          ...allTurniers,
+          (allTurniers[index].round4 = teamsArr),
+        ]);
+      } else if (nr === 5) {
+        setAllTurniers([
+          ...allTurniers,
+          (allTurniers[index].round5 = teamsArr),
+        ]);
+      }
     }
   };
 
-  let nextTeam = [{ teamName: "test" }];
+  let nextTeams = [];
 
   const updateWins = (e, pair, team) => {
-    teamPairs[pair][team].wins = e.target.value;
-    setTeamPairs([...teamPairs]);
-    nextTeam = teams.filter(
-      (team: TeamType) => team.wins > Math.floor(turnier.bestOf / 2)
+    currentTurnierInfo.round1[0][pair][team].wins = e.target.value;
+    // setTeamPairs([...teamPairs]);
+    nextTeams = currentTeams.filter(
+      (team: TeamType) => team.wins > Math.floor(currentTurnier.bestOf / 2)
     );
-    setSecondGames(nextTeam);
+    setAllTurniers([...allTurniers, (allTurniers[index].round2 = nextTeams)]);
   };
 
   return (
@@ -81,9 +89,27 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
       {/* {secondGames[index] && (
         <GenerateTable matches={secondGames} updateWins={updateWins} />
       )} */}
-      {teamPairs[index] && (
-        <GenerateTable matches={teamPairs} updateWins={updateWins} />
+      {currentTurnierInfo.round1[0] && (
+        <GenerateTable
+          matches={currentTurnierInfo.round1[0]}
+          updateWins={updateWins}
+        />
       )}
     </>
   );
 };
+
+// Later
+
+// if (
+//   teams.length === 8 ||
+//   (teams.length > 13 && teams.length <= 16) ||
+//   (teams.length > 27 && teams.length <= 32)
+// ) {
+//   console.log("Starte Turnier!");
+// } else if (
+//   (teams.length > 8 && teams.length <= 13) ||
+//   (teams.length > 16 && teams.length <= 27)
+// ) {
+//   console.log("Starte Vorrunde!");
+// }
