@@ -1,27 +1,31 @@
-export const GenerateTable = ({matches, updateWins}) => {
-    return (
-        <article className="tableContainer">
-         {matches.map((teams, i) => (
+export const GenerateTable = ({ round, matches, updateWins }) => {
+  console.log("Matches", matches);
+  return (
+    <article className="tableContainer">
+      {matches.map((teams, i) => (
         <div key={i} className="pair">
-            {/* Erstes Team im Paar */}
-            <div className="team">
-                <p className="teamName">{teams[0].teamName}</p>
-                <p>{teams[0].wins}</p>
-                <input type="text" onChange={(e) => updateWins(e, i, 0)} />
-            </div>
+          {/* Erstes Team im Paar */}
+          <div className="team">
+            <p className="teamName">{teams[0].teamName}</p>
+            <p>{teams[0].wins}</p>
+            <input type="text" onChange={(e) => updateWins(e, matches, i, 0)} />
+          </div>
 
-            {/* Zweites Team im Paar */}
-            {teams[1] &&
+          {/* Zweites Team im Paar */}
+          {teams[1] && (
             <>
-            <div className="team">
+              <div className="team">
                 <p className="teamName">{teams[1].teamName}</p>
                 <p>{teams[1].wins}</p>
-                <input type="text" onChange={(e) => updateWins(e, i, 1)} />
-            </div>
+                <input
+                  type="text"
+                  onChange={(e) => updateWins(e, matches, i, 1)}
+                />
+              </div>
             </>
-            }
+          )}
         </div>
-        ))}
+      ))}
     </article>
-    )
-}
+  );
+};

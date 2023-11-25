@@ -19,68 +19,33 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const currentTeams = allTurniers[index].teams;
 
   useEffect(() => {
-    !currentTurnierInfo.round1[0] &&
-      createPairs(currentTurnierInfo.round1[0], currentTeams);
+    //!currentTurnierInfo.round1[0] && createPairs(currentTurnierInfo.round1[0], currentTeams);
   }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("teamPairs", JSON.stringify(teamPairs));
-  // }, [teamPairs]);
 
   // Auslagern! behebt update Fehler
   // mini setMini bool {{mini ? small : normal}}
 
-  const createPairs = (nr, teams) => {
-    let t = 2;
-    if (allTurniers[index] && !teamPairs[0]) {
-      const teamsArr = [];
-      teams.sort(() => Math.random() - 0.5);
-      for (let i = 0; i < teams.length; i += t) {
-        if (teams[i + 1]) {
-          teamsArr.push([teams[i], teams[i + 1]]);
+  const updateWins = (e, matches, pair, team) => {
+    matches[pair][team].wins = e.target.value;
+
+    // Filter Teams for the next Matches
+    const nextTeams = matches
+      .map((pair) => {
+        // WinnerTeam of pair
+        const winningTeam = pair.reduce((prevTeam, currentTeam) => {
+          return currentTeam.wins > prevTeam.wins ? currentTeam : prevTeam;
+        });
+
+        if (winningTeam.wins > Math.floor(currentTurnier.bestOf / 2)) {
+          return winningTeam;
         } else {
-          teamsArr.push([teams[i]]);
-          // t = t*2
+          return null;
         }
-      }
-      if (nr === 1) {
-        setAllTurniers([
-          ...allTurniers,
-          (allTurniers[index].round1 = teamsArr),
-        ]);
-      } else if (nr === 2) {
-        setAllTurniers([
-          ...allTurniers,
-          (allTurniers[index].round2 = teamsArr),
-        ]);
-      } else if (nr === 3) {
-        setAllTurniers([
-          ...allTurniers,
-          (allTurniers[index].round3 = teamsArr),
-        ]);
-      } else if (nr === 4) {
-        setAllTurniers([
-          ...allTurniers,
-          (allTurniers[index].round4 = teamsArr),
-        ]);
-      } else if (nr === 5) {
-        setAllTurniers([
-          ...allTurniers,
-          (allTurniers[index].round5 = teamsArr),
-        ]);
-      }
-    }
-  };
+      })
+      .filter((team) => team !== null);
 
-  let nextTeams = [];
-
-  const updateWins = (e, pair, team) => {
-    currentTurnierInfo.round1[0][pair][team].wins = e.target.value;
-    // setTeamPairs([...teamPairs]);
-    nextTeams = currentTeams.filter(
-      (team: TeamType) => team.wins > Math.floor(currentTurnier.bestOf / 2)
-    );
-    setAllTurniers([...allTurniers, (allTurniers[index].round2 = nextTeams)]);
+    console.log("prepare Round-2", nextTeams);
+    // setAllTurniers([...allTurniers, (allTurniers[index].round2 = nextTeams)]);
   };
 
   return (
@@ -91,7 +56,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
       )} */}
       {currentTurnierInfo.round1[0] && (
         <GenerateTable
-          matches={currentTurnierInfo.round1[0]}
+          matches={currentTurnierInfo.round1}
           updateWins={updateWins}
         />
       )}
