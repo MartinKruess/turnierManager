@@ -1,5 +1,5 @@
-export const GenerateTable = ({ round, matches, updateWins }) => {
-  console.log("Matches", matches);
+export const GenerateTable = ({ matches, updateWins }) => {
+  // console.log("Matches", matches);
   return (
     <article className="tableContainer">
       {matches.map((teams, i) => (

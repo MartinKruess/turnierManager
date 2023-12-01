@@ -4,10 +4,8 @@ import { TeamPreview } from "../comps/teamPreview";
 import { AllTurniersType, TurnierDataType } from "../global/types";
 
 export const AddTeam = () => {
-  const { turnierData, setTurnierData }: TurnierDataType =
-    useContext(TurnierContext);
-  const { allTurniers, setAllTurniers }: AllTurniersType =
-    useContext(AllTurniersContext);
+  const { turnierData, setTurnierData } = useContext(TurnierContext);
+  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
 
   useEffect(() => {
     localStorage.setItem("turnierData", JSON.stringify(turnierData));
@@ -63,8 +61,8 @@ export const AddTeam = () => {
 
   const openTurnier = () => {
     // mix Teams
-    let t = 2;
     const teams = turnierData.teams;
+    let t = 2;
     const teamsArr = [];
     teams.sort(() => Math.random() - 0.5);
     for (let i = 0; i < teams.length; i += t) {
@@ -84,18 +82,18 @@ export const AddTeam = () => {
     setTurnierData({
       turnier: {
         turnierName: "",
-        playerStates: false,
+        playerStats: false,
         startDate: "",
         teamsize: "",
         status: false,
         bestOf: 0,
       },
       teams: [],
-      round1: [1],
-      round2: [2],
-      round3: [3],
-      round4: [4],
-      round5: [5],
+      round1: [],
+      round2: [],
+      round3: [],
+      round4: [],
+      round5: [],
     });
     localStorage.removeItem("turnierData");
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));

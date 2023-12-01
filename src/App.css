@@ -5,17 +5,17 @@
   text-align: center;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   background-color: #242628;
 }
 
-main{
+main {
   min-height: 94vh;
   display: flex;
   justify-content: center;
@@ -23,11 +23,11 @@ main{
   margin-left: 12rem;
 }
 
-section{
+section {
   width: 80%;
 }
 
-nav{
+nav {
   background-color: #323538;
   width: 12rem;
   height: 100vh;
@@ -42,69 +42,73 @@ nav{
   padding: 1rem 0;
 }
 
-nav div{
+nav div {
   width: 90%;
 }
 
-nav div a{
+nav div a {
   color: #ededed;
   display: block;
   text-decoration: none;
   padding: 0.1rem 0;
 }
 
-.active{
+.active {
   background-color: #242628;
   /* border: solid 1px; */
 }
 
 /* Form */
 
-form{
+form {
   width: 40rem;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
-label{
+label {
   font-size: 1.6rem;
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 2rem;
 }
 
-form input{
+form input {
   margin-top: 0.5rem;
   padding: 0.5rem 1rem;
 }
 
-form input[type="number"]{
-  width: 6rem
+form input[type="number"] {
+  width: 6rem;
 }
 
-form input[type="date"]{
+form input[type="date"] {
   width: 15rem;
   margin: 0.6rem auto;
 }
 
-form input[type="text"], form input[type="number"], form input[type="date"]{
+form input[type="text"],
+form input[type="number"],
+form input[type="date"] {
   border: none;
-  box-shadow: 
-  inset -1px -1px 3px #1f1f1f,
-  inset 2px 2px 3px #000000,
-  inset -1px 1px 3px #000000,
-  inset 1px -1px 3px #000000;
+  box-shadow: inset -1px -1px 3px #1f1f1f, inset 2px 2px 3px #000000,
+    inset -1px 1px 3px #000000, inset 1px -1px 3px #000000;
 }
 
-form input[type="text"]:focus,  form input[type="number"]:focus, form input[type="date"]:focus{
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus {
   border: none;
   outline-style: groove;
   outline-color: #ff0000;
   outline-width: 0.2rem;
 }
 
-form input[type="text"],  form input[type="number"], form input[type="date"], button{
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+button {
   background-color: #323538;
   color: #ccc;
   font-size: 1.6rem;
@@ -112,39 +116,40 @@ form input[type="text"],  form input[type="number"], form input[type="date"], bu
   border-radius: 0.8rem;
 }
 
-input[type="checkbox"], input[type="radio"]{
+input[type="checkbox"],
+input[type="radio"] {
   width: 1.3rem;
   height: 1.3rem;
 }
 
-button{
+button {
   padding: 0.5rem;
 }
 
-button, .newTeam .formSpace{
+button,
+.newTeam .formSpace {
   margin-top: 1.2rem;
 }
 
-button:hover{
+button:hover {
   border: solid red 0.1rem;
 }
 
-
 /* Create New Team Form */
 
-.teamSection{
+.teamSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem 5rem;
 }
 
-.newTeam{
+.newTeam {
   width: 20rem;
 }
 
-.teamPreview{
-  background-color:#1f1f1f;
+.teamPreview {
+  background-color: #1f1f1f;
   width: 30rem;
   height: min-content;
   font-size: 1.2rem;
@@ -157,30 +162,26 @@ button:hover{
   border: solid 0.1rem #cccccc22;
 }
 
-.teamPreview p{
+.teamPreview p {
   background-color: #ededed;
   color: #242628;
   width: 13.5rem;
   height: 2rem;
   border: solid 0.1rem #cccccc33;
-  box-shadow:
-  inset 1px 1px 6px #000000,
-  inset -1px -1px 6px #000000,
-  inset -1px 1px 6px #000000,
-  inset 1px -1px 6px #000000;
+  box-shadow: inset 1px 1px 6px #000000, inset -1px -1px 6px #000000,
+    inset -1px 1px 6px #000000, inset 1px -1px 6px #000000;
 }
-
 
 /* TurnierTable */
 
-.tableContainer{
+.tableContainer {
   width: 100%;
   display: flex;
   justify-content: center;
-  overFlow: auto;
+  overflow: auto;
 }
 
-.pair{
+.pair {
   width: 13rem;
   height: 5.3rem;
   display: flex;
@@ -190,7 +191,7 @@ button:hover{
   border: solid 1px #ccc;
 }
 
-.team{
+.team {
   width: 100%;
   font-size: 1.1rem;
   display: flex;
@@ -199,26 +200,98 @@ button:hover{
   border: solid 1px;
 }
 
-.teamName{
+.teamName {
   width: 8rem;
   border: solid 1px;
 }
 
-.pair input{
+.pair input {
   width: 1.7rem;
   height: 1.4rem;
   text-align: center;
   padding: 0.2rem 0;
 }
 
-.round1, .round2, .round3, .round4, .round5{
+.round1,
+.round2,
+.round3,
+.round4,
+.round5 {
   width: 100%;
   border: solid;
 }
 
+.winnerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 2rem;
+  border: solid;
+}
+
+.winnerTeam {
+  width: 80%;
+  font-size: 1.5rem;
+  margin: auto;
+}
+
+.winnerTeamName {
+  font-size: 2.3rem;
+  margin: auto;
+}
+
+.winnerDetailsContainer {
+  width: 100%;
+  display: flex;
+  font-size: 1.5rem;
+  text-align: start;
+  line-height: 2.5rem;
+  gap: 2.5rem;
+}
+
+.winnerDetails {
+  background: linear-gradient(
+    45deg,
+    #e29a0b 5%,
+    #e0e00a 10%,
+    #d9d204 30%,
+    #dbaa24 50%,
+    #d0d31a 70%,
+    #bc9a11 80%,
+    #edbe04 95%
+  );
+  color: #333639;
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  border: solid 1px #222428;
+  border-radius: 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.4rem #cf8f0f, -0.1rem -0.1rem 0.4rem #cf8f0f,
+    -0.1rem 0.1rem 0.4rem #cf8f0f, 0.1rem -0.1rem 0.4rem #cf8f0f;
+}
+
+.winnerDetails .playerName {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.winnerDetails p {
+  font-size: 1.3rem;
+}
+
 /* Turnier overview */
 
-.turnierListContainer{
+.turnierListContainer {
   width: 100%;
   height: 18rem;
   padding: 0.5rem;
@@ -226,7 +299,7 @@ button:hover{
   border: solid;
 }
 
-.topRow{
+.topRow {
   color: #932222;
   display: flex;
   justify-content: space-between;
@@ -237,7 +310,7 @@ button:hover{
   border-bottom: solid 0.2rem #f4f4f4;
 }
 
-.row{
+.row {
   background-color: green;
   display: flex;
   justify-content: space-between;
@@ -245,19 +318,20 @@ button:hover{
   margin: 0.3rem 0;
 }
 
-.topRow div, .row div{
+.topRow div,
+.row div {
   width: 16rem;
 }
 
-.row div{
+.row div {
   padding: 0.5rem;
   margin: 0.3rem;
 }
 
-.startBTN{
+.startBTN {
   background-color: #1c1a1a;
 }
 
-.startBTN:hover{
+.startBTN:hover {
   background-color: #505050;
 }

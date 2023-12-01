@@ -30,9 +30,9 @@ export interface TeamType {
   };
 }
 
-interface TurnierType {
+export interface TurnierType {
   turnierName: string;
-  playerStates: boolean;
+  playerStats: boolean;
   startDate: string;
   teamsize: string;
   status: boolean;
@@ -56,5 +56,5 @@ export interface AllTurnierDataType {
 
 export interface AllTurniersType {
   allTurniers: TurnierDataType[];
-  setAllTurniers: React.Dispatch<React.SetStateAction<AllTurniersType>>;
+  setAllTurniers: React.Dispatch<React.SetStateAction<TurnierDataType[]>>;
 }
