@@ -335,3 +335,47 @@ button:hover {
 .startBTN:hover {
   background-color: #505050;
 }
+
+/* DETAILS */
+
+.detailsPanel {
+  background-color: #242628;
+  width: 46rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: absolute;
+  top: 10rem;
+  padding: 1.7rem;
+  border: solid;
+}
+
+.detailsPanel:first-child {
+  background-color: blue;
+}
+
+.detailsPanel h2 {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+.teamsPanel {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px #ccc3;
+}
+
+.statTitle {
+  width: 8rem;
+  display: block;
+  border: solid;
+}
+
+.currentValue {
+  width: 3rem;
+}
+
+.teamsPanel label input {
+  width: 3rem;
+}

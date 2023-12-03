@@ -1,9 +1,12 @@
-export const GenerateTable = ({ matches, updateWins }) => {
-  // console.log("Matches", matches);
+export const GenerateTable = ({ matches, updateWins, setOpenDetails }) => {
   return (
     <article className="tableContainer">
       {matches.map((teams, i) => (
-        <div key={i} className="pair">
+        <div
+          key={i}
+          className="pair"
+          onDoubleClick={() => setOpenDetails({ status: true, pair: teams })}
+        >
           {/* Erstes Team im Paar */}
           <div className="team">
             <p className="teamName">{teams[0].teamName}</p>
