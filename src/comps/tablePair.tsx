@@ -20,7 +20,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const turnierIndex = index;
   const currentTurnierInfo = allTurniers[index];
   const currentTurnier = allTurniers[index].turnier;
-  const currentTeams = allTurniers[index].teams;
+  // const currentTeams = allTurniers[index].teams;
 
   let count = 1;
   console.log(currentTurnierInfo);
@@ -29,13 +29,9 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
 
   useEffect(() => {}, [allTurniers]);
 
-  // Auslagern! behebt update Fehler
-  // mini setMini bool {{mini ? small : normal}}
-
   const updateWins = (e, matches, pair, team) => {
     matches[pair][team].wins = e.target.value;
     count <= 5 && count++;
-    console.log(count);
 
     // Filter Teams for the next Matches
     const nextTeams = matches
@@ -70,21 +66,21 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
     }
 
     // FUNKTIONIERT, UPDATED ABER ALLE TURNIER RUNDE X
-    setAllTurniers((allTurniers) =>
-      allTurniers.map((turnier) => ({
-        ...turnier,
-        [`round${count}`]: teamsArr,
-      }))
-    );
+    // setAllTurniers((allTurniers) =>
+    //   allTurniers.map((turnier) => ({
+    //     ...turnier,
+    //     [`round${count}`]: teamsArr,
+    //   }))
+    // );
 
     // NICE!!!
-    // setAllTurniers((prevTurniers) =>
-    //   prevTurniers.map((turnier, index) =>
-    //     index === turnierIndex
-    //       ? { ...turnier, [`round${count}`]: [...teamsArr] }
-    //       : turnier
-    //   )
-    // );
+    setAllTurniers((prevTurniers) =>
+      prevTurniers.map((turnier, index) =>
+        index === turnierIndex
+          ? { ...turnier, [`round${count}`]: [...teamsArr] }
+          : turnier
+      )
+    );
     //currentTurnierInfo.round2 = teamsArr;
     // currentTurnierInfo.round2[0][0].wins = 0;
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
