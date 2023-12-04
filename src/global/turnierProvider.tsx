@@ -29,6 +29,7 @@ export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
     round3: [],
     round4: [],
     round5: [],
+    winner: [],
   });
 
   if (!turnierData.turnier) {

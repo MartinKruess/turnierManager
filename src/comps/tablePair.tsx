@@ -22,7 +22,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const currentTurnier = allTurniers[index].turnier;
   // const currentTeams = allTurniers[index].teams;
 
-  let count = 1;
+  let count = 2;
   console.log(currentTurnierInfo);
 
   useEffect(() => {}, []);
@@ -31,7 +31,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
 
   const updateWins = (e, matches, pair, team) => {
     matches[pair][team].wins = e.target.value;
-    count <= 5 && count++;
+    // count <= 5 && count++;
 
     // Filter Teams for the next Matches
     const nextTeams = matches
@@ -40,6 +40,14 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
         const winningTeam = pair.reduce((prevTeam, currentTeam) => {
           return currentTeam.wins > prevTeam.wins ? currentTeam : prevTeam;
         });
+
+        if (
+          winningTeam &&
+          currentTurnierInfo.round2.length === 2 &&
+          currentTurnierInfo.round3.length === 1
+        ) {
+          console.log("winningTeam", winningTeam);
+        }
 
         if (winningTeam.wins > Math.floor(currentTurnier.bestOf / 2)) {
           return winningTeam;
@@ -65,14 +73,6 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
       }
     }
 
-    // FUNKTIONIERT, UPDATED ABER ALLE TURNIER RUNDE X
-    // setAllTurniers((allTurniers) =>
-    //   allTurniers.map((turnier) => ({
-    //     ...turnier,
-    //     [`round${count}`]: teamsArr,
-    //   }))
-    // );
-
     // NICE!!!
     setAllTurniers((prevTurniers) =>
       prevTurniers.map((turnier, index) =>
@@ -85,17 +85,17 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
     // currentTurnierInfo.round2[0][0].wins = 0;
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
 
-    // leider klappt das updaten der Round nicht ganz...
-    /*Logic: Wenn round3.length === round2.length/2 && round3 lastPair index 1 vorhanden*/
-    // if (
-    //   !(
-    //     currentTurnierInfo[`round${count}`].length ===
-    //     currentTurnierInfo[`round${count - 1}`].length / 2
-    //   ) &&
-    //   !currentTurnierInfo[`round${count}`][-1][1]
-    // ) {
-    //   count--;
-    // }
+    // next round
+    if (
+      currentTurnierInfo[`round${count}`].length ===
+        currentTurnierInfo[`round${count - 1}`].length / 2 &&
+      currentTurnierInfo[`round${count}`][
+        currentTurnierInfo[`round${count}`].length - 1
+      ][1]
+    ) {
+      ++count;
+      console.log("--RoundCount", count);
+    }
   };
   let winner = "";
   console.log(
@@ -116,6 +116,16 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   );
   console.log("----------------");
 
+  //^ Wenn originTeams.length === 8 => max 3 rounds
+  // round2.length === 2 && !round3[1] ? aktualisieren : winner
+  //! round 3 winner = winner
+  //^ Wenn originTeams.length > 13 || originTeams.length === 16 => max 4 rounds
+  // round3.length === 2 && !round4[1] ? aktualisieren : winner
+  //! round 4 winner = winner
+  //^ Wenn originTeams.length > 27 || originTeams.length === 32 => max 5 rounds
+  // round4.length === 2 && !round5[1] ? aktualisieren : winner
+  //! round 5 winner = winner
+
   return (
     <>
       {openDetails.status && (
@@ -126,7 +136,9 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
       )}
       {currentTurnierInfo.round3.length === 1 ||
         currentTurnierInfo.round4.length === 1 ||
-        (currentTurnierInfo.round5.length === 1 && <Winner winner={winner} />)}
+        (currentTurnierInfo.round5.length === 1 && (
+          <Winner winner={currentTurnierInfo.winner} />
+        ))}
       {currentTurnierInfo.round5[0] &&
         currentTurnierInfo.round5.length >= 1 && (
           <GenerateTable
