@@ -18,103 +18,184 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
 
   // Data of the current Turnier
   const turnierIndex = index;
-  const currentTurnierInfo = allTurniers[index];
-  const currentTurnier = allTurniers[index].turnier;
+  const currentInfo = allTurniers[index];
+  const currentData = allTurniers[index].turnier;
   // const currentTeams = allTurniers[index].teams;
+  const [count, setCount] = useState(1);
+  console.log("CurrData", currentInfo[`round${count}`]);
 
-  let count = 2;
-  console.log(currentTurnierInfo);
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {}, [allTurniers]);
-
-  const updateWins = (e, matches, pair, team) => {
-    matches[pair][team].wins = e.target.value;
-    // count <= 5 && count++;
-
-    // Filter Teams for the next Matches
-    const nextTeams = matches
-      .map((pair) => {
-        // WinnerTeam of pair
-        const winningTeam = pair.reduce((prevTeam, currentTeam) => {
-          return currentTeam.wins > prevTeam.wins ? currentTeam : prevTeam;
-        });
-
-        if (
-          winningTeam &&
-          currentTurnierInfo.round2.length === 2 &&
-          currentTurnierInfo.round3.length === 1
-        ) {
-          console.log("winningTeam", winningTeam);
-        }
-
-        if (winningTeam.wins > Math.floor(currentTurnier.bestOf / 2)) {
-          return winningTeam;
-        } else {
-          return null;
-        }
-      })
-      .filter((team) => team !== null);
-
-    let t = 2;
-    const teamsArr = [];
-    const newArr = [...nextTeams];
-    newArr.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < newArr.length; i += t) {
-      if (newArr[i + 1]) {
-        /* Warum beeinflusst das zurücksetzen der Wins, in diesem unabhängigem newArr, dass das Rendern der 2. Runde verhindert wird, dieses orientiert sich doch an den Werten der 1. Runde ? -.- */
-        // newArr[i].wins = 0;
-        // newArr[i + 1].wins = 0;
-        teamsArr.push([newArr[i], newArr[i + 1]]);
-      } else {
-        // newArr[i].wins = 0;
-        teamsArr.push([newArr[i]]);
-      }
-    }
-
-    // NICE!!!
-    setAllTurniers((prevTurniers) =>
-      prevTurniers.map((turnier, index) =>
-        index === turnierIndex
-          ? { ...turnier, [`round${count}`]: [...teamsArr] }
-          : turnier
-      )
-    );
-    //currentTurnierInfo.round2 = teamsArr;
-    // currentTurnierInfo.round2[0][0].wins = 0;
-    localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
-
-    // next round
+  const winHandler = (e, team) => {
+    team.wins = e.target.value;
+    team.allWins = Number(team.allWins) + Number(e.target.value);
+    console.log(e.target.value);
     if (
-      currentTurnierInfo[`round${count}`].length ===
-        currentTurnierInfo[`round${count - 1}`].length / 2 &&
-      currentTurnierInfo[`round${count}`][
-        currentTurnierInfo[`round${count}`].length - 1
-      ][1]
+      currentInfo[`round${count}`][currentInfo[`round${count}`].length - 1]
+        .wins >
+        currentData.bestOf / 2 ||
+      currentInfo[`round${count}`][currentInfo[`round${count}`].length - 2]
+        .wins >
+        currentData.bestOf / 2
     ) {
-      ++count;
-      console.log("--RoundCount", count);
+      setCount(count + 1);
+      currentInfo[`round${count}`] = currentInfo[`round${count - 1}`].filter(
+        (team) => {
+          if (team.wins > currentData.bestOf / 2) {
+            team.wins = 0;
+            return team;
+          }
+        }
+      );
+      console.log(currentInfo[`round${count}`]);
     }
   };
-  let winner = "";
-  console.log(
-    "Round2",
-    currentTurnierInfo.round2[0] && currentTurnierInfo.round2.length >= 1
+
+  return (
+    <div
+      className={
+        currentInfo.round1.length > 13 && currentInfo.round1.length <= 16
+          ? "pairContainer"
+          : "smallPairContainer"
+      }
+    >
+      {count > 1 &&
+        currentInfo[`round${count}`].map((team, i) =>
+          i % 2 === 0 ? (
+            <div className={`top${i} top`}>
+              <p className="teamName">{team.teamName}</p>
+              <input
+                type="text"
+                className="win"
+                onChange={(e) => winHandler(e, team)}
+              />
+            </div>
+          ) : (
+            <div className={`bot${i}`}>
+              <div className={`top${i} bot`}>
+                <p className="teamName">{team.teamName}</p>
+                <input
+                  type="text"
+                  className="win"
+                  onChange={(e) => winHandler(e, team)}
+                />
+              </div>
+            </div>
+          )
+        )}
+      {currentInfo[`round${count}`].map((team, i) =>
+        i % 2 === 0 ? (
+          <div className={`top${i} top`}>
+            <p className="teamName">{team.teamName}</p>
+            <input
+              type="text"
+              className="win"
+              onChange={(e) => winHandler(e, team)}
+            />
+          </div>
+        ) : (
+          <div className={`bot${i}`}>
+            <div className={`top${i} bot`}>
+              <p className="teamName">{team.teamName}</p>
+              <input
+                type="text"
+                className="win"
+                onChange={(e) => winHandler(e, team)}
+              />
+            </div>
+          </div>
+        )
+      )}
+    </div>
   );
-  console.log(
-    "Round3",
-    currentTurnierInfo.round3 && currentTurnierInfo.round3.length >= 1
-  );
-  console.log(
-    "Round4",
-    currentTurnierInfo.round4 && currentTurnierInfo.round4.length >= 1
-  );
-  console.log(
-    "Round5",
-    currentTurnierInfo.round5 && currentTurnierInfo.round5.length >= 1
-  );
-  console.log("----------------");
+
+  const updateRound = () => {
+    const nextRound = currentInfo[`round${count}`].filter((pair) => {
+      if (pair[0].wins > currentData.bestOf / 2) {
+        return pair[0];
+      }
+      if (pair[1].wins > currentData.bestOf / 2) {
+        return pair[1];
+      }
+    });
+    console.log("nextRound", nextRound);
+  };
+  updateRound();
+  console.log("start", currentInfo);
+
+  // console.log(currentTurnierInfo);
+
+  // useEffect(() => {}, []);
+
+  // useEffect(() => {}, [allTurniers]);
+
+  // const updateWins = (e, matches, pair, team) => {
+  //   matches[pair][team].wins = e.target.value;
+  //   // count <= 5 && count++;
+
+  //   // Filter Teams for the next Matches
+  //   const nextTeams = matches
+  //     .map((pair) => {
+  //       // WinnerTeam of pair
+  //       const winningTeam = pair.reduce((prevTeam, currentTeam) => {
+  //         return currentTeam.wins > prevTeam.wins ? currentTeam : prevTeam;
+  //       });
+
+  //       if (
+  //         winningTeam &&
+  //         currentTurnierInfo.round2.length === 2 &&
+  //         currentTurnierInfo.round3.length === 1
+  //       ) {
+  //         console.log("winningTeam", winningTeam);
+  //       }
+
+  //       if (winningTeam.wins > Math.floor(currentTurnier.bestOf / 2)) {
+  //         return winningTeam;
+  //       } else {
+  //         return null;
+  //       }
+  //     })
+  //     .filter((team) => team !== null);
+
+  //   let t = 2;
+  //   const teamsArr = [];
+  //   const newArr = [...nextTeams];
+  //   newArr.sort(() => Math.random() - 0.5);
+  //   for (let i = 0; i < newArr.length; i += t) {
+  //     if (newArr[i + 1]) {
+  //       /* Warum beeinflusst das zurücksetzen der Wins, in diesem unabhängigem newArr, dass das Rendern der 2. Runde verhindert wird, dieses orientiert sich doch an den Werten der 1. Runde ? -.- */
+  //       // newArr[i].wins = 0;
+  //       // newArr[i + 1].wins = 0;
+  //       teamsArr.push([newArr[i], newArr[i + 1]]);
+  //     } else {
+  //       // newArr[i].wins = 0;
+  //       teamsArr.push([newArr[i]]);
+  //     }
+  //   }
+
+  //   // NICE!!!
+  //   setAllTurniers((prevTurniers) =>
+  //     prevTurniers.map((turnier, index) =>
+  //       index === turnierIndex
+  //         ? { ...turnier, [`round${count}`]: [...teamsArr] }
+  //         : turnier
+  //     )
+  //   );
+  //   //currentTurnierInfo.round2 = teamsArr;
+  //   // currentTurnierInfo.round2[0][0].wins = 0;
+  //   localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
+
+  //   // next round
+  //   if (
+  //     currentTurnierInfo[`round${count}`].length ===
+  //       currentTurnierInfo[`round${count - 1}`].length / 2 &&
+  //     currentTurnierInfo[`round${count}`][
+  //       currentTurnierInfo[`round${count}`].length - 1
+  //     ][1]
+  //   ) {
+  //     ++count;
+  //     console.log("--RoundCount", count);
+  //   }
+  // };
+  // let winner = "";
 
   //^ Wenn originTeams.length === 8 => max 3 rounds
   // round2.length === 2 && !round3[1] ? aktualisieren : winner
@@ -128,7 +209,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
 
   return (
     <>
-      {openDetails.status && (
+      {/* {openDetails.status && (
         <DetailsPanel
           openDetails={openDetails}
           setOpenDetails={setOpenDetails}
@@ -158,26 +239,26 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
       {currentTurnierInfo.round3[0] &&
         currentTurnierInfo.round3.length >= 1 && (
           <GenerateTable
-            matches={currentTurnierInfo.round3}
-            updateWins={updateWins}
-            setOpenDetails={setOpenDetails}
-          />
+          //   matches={currentTurnierInfo.round3}
+          //   updateWins={updateWins}
+          //   setOpenDetails={setOpenDetails}
+          // />
         )}
       {currentTurnierInfo.round2[0] &&
         currentTurnierInfo.round2.length >= 1 && (
           <GenerateTable
-            matches={currentTurnierInfo.round2}
-            updateWins={updateWins}
-            setOpenDetails={setOpenDetails}
+            // matches={currentTurnierInfo.round2}
+            // updateWins={updateWins}
+            // setOpenDetails={setOpenDetails}
           />
         )}
       {currentTurnierInfo.round1[0] && (
         <GenerateTable
-          matches={currentTurnierInfo.round1}
-          updateWins={updateWins}
-          setOpenDetails={setOpenDetails}
+          // matches={currentTurnierInfo.round1}
+          // updateWins={updateWins}
+          // setOpenDetails={setOpenDetails}
         />
-      )}
+      )} */}
     </>
   );
 };

@@ -62,17 +62,8 @@ export const AddTeam = () => {
   const openTurnier = () => {
     // mix Teams
     const teams = turnierData.teams;
-    let t = 2;
-    const teamsArr = [];
     teams.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < teams.length; i += t) {
-      if (teams[i + 1]) {
-        teamsArr.push([teams[i], teams[i + 1]]);
-      } else {
-        teamsArr.push([teams[i]]);
-      }
-    }
-    turnierData.round1 = teamsArr;
+    turnierData.round1 = teams;
 
     if (allTurniers === null) {
       setAllTurniers([turnierData]);
@@ -94,6 +85,7 @@ export const AddTeam = () => {
       round3: [],
       round4: [],
       round5: [],
+      winner: [],
     });
     localStorage.removeItem("turnierData");
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));

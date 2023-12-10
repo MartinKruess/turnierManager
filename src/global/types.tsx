@@ -41,6 +41,7 @@ export interface TurnierType {
 
 export interface TurnierDataType {
   teams: TeamType[];
+  rounds: TeamType[][];
   round1: TeamType[];
   round2: TeamType[];
   round3: TeamType[];

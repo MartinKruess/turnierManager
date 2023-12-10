@@ -379,3 +379,97 @@ button:hover {
 .teamsPanel label input {
   width: 3rem;
 }
+
+/* Pairs with Filter */
+
+.smallPairContainer,
+.pairContainer {
+  width: 100%;
+  height: 7.2rem;
+  font-size: 1.2rem;
+  display: grid;
+  padding: 0.5rem 0;
+}
+
+.smallPairContainer {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 3rem 3rem;
+  grid-template-areas:
+    "team0 team2 team4 team6"
+    "team1 team3 team5 team7";
+}
+
+.pairContainer {
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 1.3rem 1.3rem;
+  grid-template-areas:
+    "team0 team2 team4 team6 team8 team10 team12 team14"
+    "team1 team3 team5 team7 team9 team11 team13 team15";
+}
+
+.top,
+.bot {
+  background-color: #ccc1;
+  display: flex;
+  padding: 0.5rem;
+  border: solid 0.1rem red;
+}
+
+.top0 {
+  grid-area: team0;
+}
+.top2 {
+  grid-area: team2;
+}
+.top4 {
+  grid-area: team4;
+}
+.top6 {
+  grid-area: team6;
+}
+.top8 {
+  grid-area: team8;
+}
+.top10 {
+  grid-area: team10;
+}
+.top12 {
+  grid-area: team12;
+}
+.top14 {
+  grid-area: team14;
+}
+
+.bot1 {
+  grid-area: team1;
+}
+.bot3 {
+  grid-area: team3;
+}
+.bot5 {
+  grid-area: team5;
+}
+.bot7 {
+  grid-area: team7;
+}
+.bot9 {
+  grid-area: team9;
+}
+.bot11 {
+  grid-area: team11;
+}
+.bot13 {
+  grid-area: team13;
+}
+.bot15 {
+  grid-area: team15;
+}
+
+.win {
+  background-color: transparent;
+  color: red;
+  width: 2rem;
+  font-size: 1.3rem;
+  margin-left: 0.9rem;
+  text-align: center;
+}
