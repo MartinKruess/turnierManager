@@ -1,27 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
-import { AllTurniersType, TeamType } from "../global/types";
-import { GenerateTable } from "./generateTable";
 import { Winner } from "./winner";
-import { DetailsPanel } from "./detailsPanel";
 
 interface TurnierIndexProp {
   index: number;
 }
 
 export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
-  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
-  const [openDetails, setOpenDetails] = useState({
-    status: false,
-    clicked: [],
-  });
+  const { allTurniers } = useContext(AllTurniersContext);
 
   // Data of the current Turnier
-  const turnierIndex = index;
   const currentTurnier = allTurniers[index];
   const currentRounds = allTurniers[index].rounds;
   const currentData = allTurniers[index].turnier;
-  const currentTeams = allTurniers[index].teams;
   const [count, setCount] = useState(0);
 
   const winHandler = (e, team) => {
