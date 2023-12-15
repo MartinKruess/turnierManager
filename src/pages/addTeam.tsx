@@ -9,7 +9,6 @@ export const AddTeam = () => {
 
   useEffect(() => {
     localStorage.setItem("turnierData", JSON.stringify(turnierData));
-    console.log("all", allTurniers);
   }, [turnierData]);
   const teamsize = turnierData.turnier.teamsize;
 
@@ -63,7 +62,7 @@ export const AddTeam = () => {
     // mix Teams
     const teams = turnierData.teams;
     teams.sort(() => Math.random() - 0.5);
-    turnierData.round1 = teams;
+    turnierData.rounds[0] = teams;
 
     if (allTurniers === null) {
       setAllTurniers([turnierData]);
@@ -80,11 +79,7 @@ export const AddTeam = () => {
         bestOf: 0,
       },
       teams: [],
-      round1: [],
-      round2: [],
-      round3: [],
-      round4: [],
-      round5: [],
+      rounds: [[], [], [], [], []],
       winner: [],
     });
     localStorage.removeItem("turnierData");

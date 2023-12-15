@@ -24,12 +24,7 @@ export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
       bestOf: 0,
     },
     teams: [],
-    rounds: [[], [], [], [], [], []],
-    round1: [],
-    round2: [],
-    round3: [],
-    round4: [],
-    round5: [],
+    rounds: [[], [], [], [], []],
     winner: [],
   });
 
