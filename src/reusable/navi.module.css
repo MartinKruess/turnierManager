@@ -1,7 +1,52 @@
-.themeImg{
+nav {
+  background-color: #323538;
+  width: 12rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 1.4rem;
+  padding: 1rem 0;
+}
+
+nav div {
+  width: 90%;
+}
+
+nav div a {
+  color: #ededed;
+  display: block;
+  text-decoration: none;
+  padding: 0.1rem 0;
+}
+
+.active {
+  background-color: #242628;
+  /* border: solid 1px; */
+}
+
+.secondMenu {
+  background-color: #323538;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  font-size: 1.25rem;
+}
+
+.secondMenu div {
+  width: 85%;
+  text-align: end;
+}
+
+.themeImg {
   width: 7rem;
 }
 
-.themeImg img{
+.themeImg img {
   width: 100%;
 }

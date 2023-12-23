@@ -7,7 +7,7 @@ interface TurnierIndexProp {
 }
 
 export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
-  const { allTurniers } = useContext(AllTurniersContext);
+  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
 
   // Data of the current Turnier
   const currentTurnier = allTurniers[index];
@@ -15,21 +15,42 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const currentData = allTurniers[index].turnier;
   const [count, setCount] = useState(0);
 
+  // const updatePlayerPoints = (player: any) => {
+  //   player.points = calcPoints(player);
+  // }
+
+  // const calcPoints = (player: any) => {
+  //   const points = player.goals * 100 + player.assists * 50 + player.defs * 75;
+  //   return points;
+  // }
+
   const winHandler = (e, team) => {
     team.wins = e.target.value;
     team.allWins = Number(team.allWins) + Number(e.target.value);
+
+    // Auswertung der Wins/Runde
     if (
       currentRounds[count][currentRounds[count].length - 1].wins >
         currentData.bestOf / 2 ||
       currentRounds[count][currentRounds[count].length - 2].wins >
         currentData.bestOf / 2
     ) {
-      currentRounds[count + 1] = currentRounds[count].filter((team) => {
-        if (team.wins > currentData.bestOf / 2) {
-          team.wins = 0;
-          return team;
-        }
-      });
+      if (currentRounds[count].length > 2) {
+        currentRounds[count + 1] = currentRounds[count].filter((team) => {
+          if (team.wins > currentData.bestOf / 2) {
+            team.wins = 0;
+            return team;
+          }
+        });
+      } else {
+        currentTurnier.winner = currentRounds[count].filter((team) => {
+          if (team.wins > currentData.bestOf / 2) {
+            team.wins = 0;
+            return team;
+          }
+        });
+      }
+
       setCount(count + 1);
       localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
     }
@@ -42,9 +63,11 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
           className={
             currentRounds[0].length > 13 && currentRounds[0].length <= 16
               ? "pairContainer"
-              : "smallPairContainer"
+              : round.length > 1
+              ? "smallPairContainer"
+              : ""
           }
-          key={i}
+          key={i + 10}
         >
           {round.map((team, i) =>
             i % 2 === 0 ? (
@@ -57,7 +80,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
                 />
               </div>
             ) : (
-              <div className={`bot${i}`}>
+              <div className={`bot${i}`} key={i}>
                 <div className={`top${i} bot`}>
                   <p className="teamName">{team.teamName}</p>
                   <input
@@ -71,7 +94,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
           )}
         </div>
       ))}
-      <Winner winner={currentTurnier.winner} />
+      {currentTurnier.winner[0] && <Winner winner={currentTurnier.winner} />}
     </article>
   );
 };

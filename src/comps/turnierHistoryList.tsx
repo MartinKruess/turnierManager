@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { AllTurniersType, TurnierDataType } from "../global/types";
 
-export const TurnierList = ({ setIndex, setOpenTurnier }) => {
+export const TurnierHistoryList = ({ setIndex, setOpenTurnier }) => {
   const { allTurniers, setAllTurniers }: AllTurniersType =
     useContext(AllTurniersContext);
 
@@ -13,15 +13,7 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
     setIndex(i);
   };
 
-  const closeTurnier = (i: number) => {
-    setAllTurniers((turniers) => {
-      return turniers.map((turnier, index) => {
-        if (index === i) {
-          return { ...turnier, turnier: { ...turnier.turnier, status: false } };
-        }
-        return turnier;
-      });
-    });
+  const closeTurnier = () => {
     setOpenTurnier(false);
   };
 
@@ -32,14 +24,13 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
         <div>Teams</div>
         <div>Teamgröße</div>
         <div>Best of</div>
-        <div>Startet am</div>
-        <div>Starten</div>
-        <div></div>
+        <div>Stattgefunden am</div>
+        <div>Vorschau</div>
       </article>
-      {allTurniers && allTurniers.find((turnier) => turnier.turnier.status) ? (
+      {allTurniers && allTurniers.find((turnier) => !turnier.turnier.status) ? (
         allTurniers.map((turnier: TurnierDataType, i: number) => {
           return (
-            turnier.turnier.status && (
+            !turnier.turnier.status && (
               <article key={i} className="row">
                 <div>{turnier.turnier.turnierName}</div>
                 <div>{turnier.teams.length}</div>
@@ -49,14 +40,7 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
                 </div>
                 <div>{String(turnier.turnier.startDate)}</div>
                 <button className="startBTN" onClick={() => showTurnier(i)}>
-                  Turnier Starten
-                </button>
-                <button
-                  className="startBTN"
-                  onClick={() => closeTurnier(i)}
-                  disabled={!turnier.winner[0].teamName}
-                >
-                  Turnier Beenden
+                  Details
                 </button>
               </article>
             )

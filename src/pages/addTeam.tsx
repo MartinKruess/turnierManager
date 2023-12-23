@@ -23,12 +23,14 @@ export const AddTeam = () => {
     const newTeam = {
       teamName: formElement.teamName.value,
       wins: 0,
+      allWins: 0,
       player1: {
         playerName: formElement.playerName1.value,
         playerRank: formElement.playerRank1.value,
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
       player2: {
         playerName:
@@ -42,6 +44,7 @@ export const AddTeam = () => {
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
       player3: {
         playerName: teamsize === "trio" ? formElement.playerName3.value : "",
@@ -49,6 +52,7 @@ export const AddTeam = () => {
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
     };
     turnierData.teams.length < 32 &&

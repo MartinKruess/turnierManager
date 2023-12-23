@@ -7,12 +7,14 @@ export interface ProviderProps {
 export interface TeamType {
   teamName: string;
   wins: number;
+  allWins: number;
   player1: {
     playerName: string;
     playerRank: string;
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
   player2: {
     playerName: string;
@@ -20,6 +22,7 @@ export interface TeamType {
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
   player3: {
     playerName: string;
@@ -27,6 +30,7 @@ export interface TeamType {
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
 }
 
