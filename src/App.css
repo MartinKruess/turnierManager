@@ -59,7 +59,8 @@ form input[type="date"] {
 
 form input[type="text"],
 form input[type="number"],
-form input[type="date"] {
+form input[type="date"],
+form select {
   border: none;
   box-shadow: inset -1px -1px 3px #1f1f1f, inset 2px 2px 3px #000000,
     inset -1px 1px 3px #000000, inset 1px -1px 3px #000000;
@@ -77,6 +78,7 @@ form input[type="date"]:focus {
 form input[type="text"],
 form input[type="number"],
 form input[type="date"],
+form select,
 button {
   background-color: #323538;
   color: #ccc;
@@ -89,6 +91,12 @@ input[type="checkbox"],
 input[type="radio"] {
   width: 1.3rem;
   height: 1.3rem;
+}
+
+select {
+  width: 50%;
+  padding: 0.5rem;
+  margin: 0.8rem auto;
 }
 
 button {
@@ -466,6 +474,8 @@ button:hover {
 
 .teamRow {
   display: flex;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
 }
 
 .historyText {
@@ -474,6 +484,69 @@ button:hover {
 }
 
 .historyNumber {
-  width: 5rem;
+  width: 5.4rem;
   border: solid 0.1rem red;
+}
+
+.modal {
+  width: 30rem;
+  height: 10rem;
+  margin: 2rem;
+  position: relative;
+}
+
+.neonTextRed {
+  color: #b24b4b;
+  text-shadow: 0 0 0.6rem #ff0000, 0 0 1rem #ff0000, 0 0 1.9rem #ff3c00,
+    0 0 3.8rem #ff4d00, 0 0 8rem #ff3c00, 0 0 8.8rem #ff3c00, 0 0 10rem #ff3c00,
+    0 0 15rem #ff3c00;
+}
+
+.neonTextBlue {
+  color: #5d5db3;
+  text-shadow: 0 0 0.6rem #0026ff, 0 0 1rem #0026ff, 0 0 1.9rem #001aff,
+    0 0 3.8rem #001aff, 0 0 8rem #001aff, 0 0 8.8rem #001aff, 0 0 10rem #001aff,
+    0 0 15rem #001aff;
+}
+
+.leftBox,
+.rightBox {
+  width: 14rem;
+  height: 4.9rem;
+  font-size: 1.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .center {
+  width: 4rem;
+  height: 4rem;
+  border: solid;
+  border-radius: 3rem;
+} */
+
+.rightBox {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 1.4rem;
+  border-top: solid #0026ff 0.3rem;
+}
+
+.leftBox {
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  border-bottom: solid red 0.3rem;
+}
+
+.modal h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 28%;
+  left: 43.5%;
+  z-index: 1;
 }

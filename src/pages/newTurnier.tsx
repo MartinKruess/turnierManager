@@ -5,10 +5,12 @@ import {
   TurnierDataType,
   TurnierType,
 } from "../global/types";
+import { ThemeContext } from "../global/themeProvider";
 
 export const NewTurnier = () => {
   const [rounds, setRounds] = useState(1);
   const { turnierData, setTurnierData } = useContext(TurnierContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     localStorage.setItem("turnierData", JSON.stringify(turnierData));
@@ -19,9 +21,8 @@ export const NewTurnier = () => {
   const roundHandler = (e: React.FormEvent) => {
     e.preventDefault();
     const formElement = e.target as HTMLFormElement;
-    if (formElement.value > 0 && formElement.value < 6) {
-      setRounds(Number(formElement.value));
-    }
+    console.log(formElement.value);
+    setRounds(Number(formElement.value));
   };
 
   const submitHandler = (e: React.FormEvent) => {
@@ -36,7 +37,7 @@ export const NewTurnier = () => {
       startDate: date,
       teamsize: formElement.teamsize.value,
       playerStats: formElement.playerStats.checked,
-      bestOf: Number(formElement.bestOf.value),
+      bestOf: rounds,
       status: true,
     };
     if (!turnierData[0]) {
@@ -80,7 +81,7 @@ export const NewTurnier = () => {
             Spielerstatistik on/off
             <input type="checkbox" name="playerStats" id="stats" />
           </label>
-          <label
+          {/* <label
             htmlFor="bestOf"
             title="1: Ko-System ab Viertelfinale best of 3 | 3: Best of 3 ab Viertelfinale best of 5 |  5: Best of 5 ab Viertelfinale best of 7"
           >
@@ -92,7 +93,13 @@ export const NewTurnier = () => {
               onChange={(e) => roundHandler(e)}
               value={rounds}
             />
-          </label>
+          </label> */}
+          <select name="" id="matches" onChange={(e) => roundHandler(e)}>
+            <option value="1">K.O- System</option>
+            <option value="3">Best of 3</option>
+            {theme === "cod" && <option value="5">Best of 5</option>}
+            {theme === "cod" && <option value="7">Bets of 7</option>}
+          </select>
           <button type="submit">Turnier erstellen</button>
         </form>
       )}

@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { AllTurniersType, TurnierDataType } from "../global/types";
+import { DuellModal } from "./modal";
 
 export const TurnierList = ({ setIndex, setOpenTurnier }) => {
   const { allTurniers, setAllTurniers }: AllTurniersType =
@@ -34,8 +35,9 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
         <div>Best of</div>
         <div>Startet am</div>
         <div>Starten</div>
-        <div></div>
+        <div>Beenden</div>
       </article>
+      <DuellModal />
       {allTurniers && allTurniers.find((turnier) => turnier.turnier.status) ? (
         allTurniers.map((turnier: TurnierDataType, i: number) => {
           return (
@@ -51,13 +53,13 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
                 <button className="startBTN" onClick={() => showTurnier(i)}>
                   Turnier Starten
                 </button>
-                <button
-                  className="startBTN"
-                  onClick={() => closeTurnier(i)}
-                  disabled={!turnier.winner[0].teamName}
-                >
-                  Turnier Beenden
-                </button>
+                {turnier.winner[0] ? (
+                  <button className="startBTN" onClick={() => closeTurnier(i)}>
+                    Turnier Beenden
+                  </button>
+                ) : (
+                  <div></div>
+                )}
               </article>
             )
           );

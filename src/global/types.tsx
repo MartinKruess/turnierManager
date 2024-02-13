@@ -7,7 +7,7 @@ export interface ProviderProps {
 export interface TeamType {
   teamName: string;
   wins: number;
-  allWins: number;
+  teampoints: number;
   player1: {
     playerName: string;
     playerRank: string;

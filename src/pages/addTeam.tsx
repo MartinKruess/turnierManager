@@ -23,7 +23,7 @@ export const AddTeam = () => {
     const newTeam = {
       teamName: formElement.teamName.value,
       wins: 0,
-      allWins: 0,
+      teampoints: 0,
       player1: {
         playerName: formElement.playerName1.value,
         playerRank: formElement.playerRank1.value,
