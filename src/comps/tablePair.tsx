@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
-import { AllTurniersType, TeamType } from "../global/types";
-import { GenerateTable } from "./generateTable";
+import { Winner } from "./winner";
 
 interface TurnierIndexProp {
   index: number;
@@ -9,72 +8,118 @@ interface TurnierIndexProp {
 
 export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
-  const [teamPairs, setTeamPairs]: TeamType = useState(
-    [] || localStorage.getItem(JSON.parse("teamPairs"))
-  );
 
   // Data of the current Turnier
-  const currentTurnierInfo = allTurniers[index];
-  const currentTurnier = allTurniers[index].turnier;
-  const currentTeams = allTurniers[index].teams;
+  const currentTurnier = allTurniers[index];
+  const currentRounds = allTurniers[index].rounds;
+  const currentData = allTurniers[index].turnier;
+  const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    //!currentTurnierInfo.round1[0] && createPairs(currentTurnierInfo.round1[0], currentTeams);
-  }, []);
+  // const updatePlayerPoints = (player: any) => {
+  //   player.points = calcPoints(player);
+  // }
 
-  // Auslagern! behebt update Fehler
-  // mini setMini bool {{mini ? small : normal}}
+  // const calcPoints = (player: any) => {
+  //   const points = player.goals * 100 + player.assists * 50 + player.defs * 75;
+  //   return points;
+  // }
 
-  const updateWins = (e, matches, pair, team) => {
-    matches[pair][team].wins = e.target.value;
+  const winHandler = (e, team) => {
+    team.wins = e.target.value;
+    team.allWins = Number(team.allWins) + Number(e.target.value);
 
-    // Filter Teams for the next Matches
-    const nextTeams = matches
-      .map((pair) => {
-        // WinnerTeam of pair
-        const winningTeam = pair.reduce((prevTeam, currentTeam) => {
-          return currentTeam.wins > prevTeam.wins ? currentTeam : prevTeam;
+    // Auswertung der Wins/Runde
+    if (
+      currentRounds[count][currentRounds[count].length - 1].wins >
+        currentData.bestOf / 2 ||
+      currentRounds[count][currentRounds[count].length - 2].wins >
+        currentData.bestOf / 2
+    ) {
+      if (currentRounds[count].length > 2) {
+        currentRounds[count + 1] = currentRounds[count].filter((team) => {
+          if (team.wins > currentData.bestOf / 2) {
+            team.wins = 0;
+            return team;
+          }
         });
+      } else {
+        currentTurnier.winner = currentRounds[count].filter((team) => {
+          if (team.wins > currentData.bestOf / 2) {
+            team.wins = 0;
+            return team;
+          }
+        });
+      }
 
-        if (winningTeam.wins > Math.floor(currentTurnier.bestOf / 2)) {
-          return winningTeam;
-        } else {
-          return null;
-        }
-      })
-      .filter((team) => team !== null);
-
-    console.log("prepare Round-2", nextTeams);
-    // setAllTurniers([...allTurniers, (allTurniers[index].round2 = nextTeams)]);
+      setCount(count + 1);
+      localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
+    }
   };
 
   return (
-    <>
-      {/* Console.log true but render false: Can not read undefined (teamName...) */}
-      {/* {secondGames[index] && (
-        <GenerateTable matches={secondGames} updateWins={updateWins} />
-      )} */}
-      {currentTurnierInfo.round1[0] && (
-        <GenerateTable
-          matches={currentTurnierInfo.round1}
-          updateWins={updateWins}
-        />
-      )}
-    </>
+    <article className="turnierTree">
+      {currentRounds.map((round, i) => (
+        <div
+          className={
+            currentRounds[0].length > 13 && currentRounds[0].length <= 16
+              ? "pairContainer"
+              : round.length > 1
+              ? "smallPairContainer"
+              : ""
+          }
+          key={i + 10}
+        >
+          {round.map((team, i) =>
+            i % 2 === 0 ? (
+              <div className={`top${i} top`} key={i}>
+                <p className="teamName">{team.teamName}</p>
+                <input
+                  type="text"
+                  className="win"
+                  onChange={(e) => winHandler(e, team)}
+                />
+              </div>
+            ) : (
+              <div className={`bot${i}`} key={i}>
+                <div className={`top${i} bot`}>
+                  <p className="teamName">{team.teamName}</p>
+                  <input
+                    type="text"
+                    className="win"
+                    onChange={(e) => winHandler(e, team)}
+                  />
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      ))}
+      {currentTurnier.winner[0] && <Winner winner={currentTurnier.winner} />}
+    </article>
   );
 };
 
-// Later
+//^ Wenn originTeams.length === 8 => max 3 rounds
+// round2.length === 2 && !round3[1] ? aktualisieren : winner
+//! round 3 winner = winner
+//^ Wenn originTeams.length > 13 || originTeams.length === 16 => max 4 rounds
+// round3.length === 2 && !round4[1] ? aktualisieren : winner
+//! round 4 winner = winner
+//^ Wenn originTeams.length > 27 || originTeams.length === 32 => max 5 rounds
+// round4.length === 2 && !round5[1] ? aktualisieren : winner
+//! round 5 winner = winner
 
-// if (
-//   teams.length === 8 ||
-//   (teams.length > 13 && teams.length <= 16) ||
-//   (teams.length > 27 && teams.length <= 32)
-// ) {
-//   console.log("Starte Turnier!");
-// } else if (
-//   (teams.length > 8 && teams.length <= 13) ||
-//   (teams.length > 16 && teams.length <= 27)
-// ) {
-//   console.log("Starte Vorrunde!");
-// }
+/* if (
+  currentTeams.length === 8 ||
+  (currentTeams.length > 13 && currentTeams.length <= 16) ||
+  (currentTeams.length > 27 && currentTeams.length <= 32)
+) {
+  console.log("Starte Turnier!");
+} else if (
+  (currentTeams.length > 8 && currentTeams.length <= 13) ||
+  (currentTeams.length > 16 && currentTeams.length <= 27)
+) {
+  console.log("Starte Vorrunde!");
+}else{
+  console.log("test")
+}*/

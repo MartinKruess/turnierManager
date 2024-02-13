@@ -4,14 +4,11 @@ import { TeamPreview } from "../comps/teamPreview";
 import { AllTurniersType, TurnierDataType } from "../global/types";
 
 export const AddTeam = () => {
-  const { turnierData, setTurnierData }: TurnierDataType =
-    useContext(TurnierContext);
-  const { allTurniers, setAllTurniers }: AllTurniersType =
-    useContext(AllTurniersContext);
+  const { turnierData, setTurnierData } = useContext(TurnierContext);
+  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
 
   useEffect(() => {
     localStorage.setItem("turnierData", JSON.stringify(turnierData));
-    console.log("all", allTurniers);
   }, [turnierData]);
   const teamsize = turnierData.turnier.teamsize;
 
@@ -26,12 +23,14 @@ export const AddTeam = () => {
     const newTeam = {
       teamName: formElement.teamName.value,
       wins: 0,
+      teampoints: 0,
       player1: {
         playerName: formElement.playerName1.value,
         playerRank: formElement.playerRank1.value,
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
       player2: {
         playerName:
@@ -45,6 +44,7 @@ export const AddTeam = () => {
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
       player3: {
         playerName: teamsize === "trio" ? formElement.playerName3.value : "",
@@ -52,6 +52,7 @@ export const AddTeam = () => {
         goals: 0,
         assists: 0,
         defs: 0,
+        points: 0,
       },
     };
     turnierData.teams.length < 32 &&
@@ -63,18 +64,9 @@ export const AddTeam = () => {
 
   const openTurnier = () => {
     // mix Teams
-    let t = 2;
     const teams = turnierData.teams;
-    const teamsArr = [];
     teams.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < teams.length; i += t) {
-      if (teams[i + 1]) {
-        teamsArr.push([teams[i], teams[i + 1]]);
-      } else {
-        teamsArr.push([teams[i]]);
-      }
-    }
-    turnierData.round1 = teamsArr;
+    turnierData.rounds[0] = teams;
 
     if (allTurniers === null) {
       setAllTurniers([turnierData]);
@@ -84,18 +76,15 @@ export const AddTeam = () => {
     setTurnierData({
       turnier: {
         turnierName: "",
-        playerStates: false,
+        playerStats: false,
         startDate: "",
         teamsize: "",
         status: false,
         bestOf: 0,
       },
       teams: [],
-      round1: [1],
-      round2: [2],
-      round3: [3],
-      round4: [4],
-      round5: [5],
+      rounds: [[], [], [], [], []],
+      winner: [],
     });
     localStorage.removeItem("turnierData");
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));

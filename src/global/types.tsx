@@ -7,12 +7,14 @@ export interface ProviderProps {
 export interface TeamType {
   teamName: string;
   wins: number;
+  teampoints: number;
   player1: {
     playerName: string;
     playerRank: string;
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
   player2: {
     playerName: string;
@@ -20,6 +22,7 @@ export interface TeamType {
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
   player3: {
     playerName: string;
@@ -27,12 +30,13 @@ export interface TeamType {
     goals: number;
     assists: number;
     defs: number;
+    points: number;
   };
 }
 
-interface TurnierType {
+export interface TurnierType {
   turnierName: string;
-  playerStates: boolean;
+  playerStats: boolean;
   startDate: string;
   teamsize: string;
   status: boolean;
@@ -41,11 +45,8 @@ interface TurnierType {
 
 export interface TurnierDataType {
   teams: TeamType[];
-  round1: TeamType[];
-  round2: TeamType[];
-  round3: TeamType[];
-  round4: TeamType[];
-  round5: TeamType[];
+  rounds: TeamType[][];
+  winner: TeamType[];
   turnier: TurnierType;
 }
 
@@ -56,5 +57,5 @@ export interface AllTurnierDataType {
 
 export interface AllTurniersType {
   allTurniers: TurnierDataType[];
-  setAllTurniers: React.Dispatch<React.SetStateAction<AllTurniersType>>;
+  setAllTurniers: React.Dispatch<React.SetStateAction<TurnierDataType[]>>;
 }

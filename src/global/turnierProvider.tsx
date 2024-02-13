@@ -6,25 +6,26 @@ import {
   TurnierDataType,
 } from "./types";
 
-export const TurnierContext = createContext<TurnierDataType | null>(null);
-export const AllTurniersContext = createContext<AllTurniersType | null>(null);
+export const TurnierContext = createContext<AllTurnierDataType>(
+  {} as AllTurnierDataType
+);
+export const AllTurniersContext = createContext<AllTurniersType>(
+  {} as AllTurniersType
+);
 
 export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
   const [turnierData, setTurnierData] = useState<TurnierDataType>({
     turnier: {
       turnierName: "",
-      playerStates: false,
+      playerStats: false,
       startDate: "",
       teamsize: "",
       status: false,
       bestOf: 0,
     },
     teams: [],
-    round1: [1],
-    round2: [2],
-    round3: [3],
-    round4: [4],
-    round5: [5],
+    rounds: [[], [], [], [], []],
+    winner: [],
   });
 
   if (!turnierData.turnier) {
@@ -39,20 +40,18 @@ export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
   }
 
   return (
-    <TurnierContext.Provider
-      value={{ turnierData, setTurnierData } as AllTurnierDataType}
-    >
+    <TurnierContext.Provider value={{ turnierData, setTurnierData }}>
       {children}
     </TurnierContext.Provider>
   );
 };
 
 export const AllTurniersProvider: React.FC<ProviderProps> = ({ children }) => {
-  const [allTurniers, setAllTurniers] = useState<AllTurniersType>([]);
+  const [allTurniers, setAllTurniers] = useState<TurnierDataType[]>([]);
 
   useEffect(() => {
     const turnierDataStr = localStorage.getItem("allTurniers");
-    const allTurnierDataLS: AllTurniersType = JSON.parse(turnierDataStr);
+    const allTurnierDataLS: TurnierDataType[] = JSON.parse(turnierDataStr);
     setAllTurniers(allTurnierDataLS);
   }, []);
 

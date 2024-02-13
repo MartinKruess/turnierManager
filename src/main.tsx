@@ -1,21 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { ThemeProvider } from './global/themeProvider.tsx';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './global/router.tsx';
-import { AllTurniersProvider, TurnierProvider } from './global/turnierProvider.tsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { ThemeProvider } from "./global/themeProvider.tsx";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./global/router.tsx";
+import {
+  AllTurniersProvider,
+  TurnierProvider,
+} from "./global/turnierProvider.tsx";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <TurnierProvider>
       <AllTurniersProvider>
-          <ThemeProvider>
-            <RouterProvider router={router} />
-          </ThemeProvider>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </AllTurniersProvider>
     </TurnierProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
 
-postMessage({ payload: 'removeLoading' }, '*')
+postMessage({ payload: "removeLoading" }, "*");

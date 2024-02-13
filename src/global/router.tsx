@@ -3,6 +3,7 @@ import App from "../App";
 import { AddTeam } from "../pages/addTeam";
 import { NewTurnier } from "../pages/newTurnier";
 import { TurnierListContainer } from "../pages/turnierListContainer";
+import { TurnierHistoryListContainer } from "../pages/turnierHistory";
 
 export const router = createBrowserRouter([
   {
@@ -11,32 +12,32 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <NewTurnier />
+        element: <NewTurnier />,
       },
       {
         path: "/addTeam",
-        element: <AddTeam />
+        element: <AddTeam />,
       },
       {
         path: "/open",
-        element: <TurnierListContainer />
+        element: <TurnierListContainer />,
       },
       {
         path: "/history",
-        element: <NewTurnier />
+        element: <TurnierHistoryListContainer />,
       },
       {
         path: "/team-stats",
-        element: <NewTurnier />
+        element: <NewTurnier />,
       },
       {
         path: "/player-stats",
-        element: <NewTurnier />
+        element: <NewTurnier />,
       },
-    ]
+    ],
   },
   {
     path: "/*",
-    element: <App />
+    element: <App />,
   },
 ]);
