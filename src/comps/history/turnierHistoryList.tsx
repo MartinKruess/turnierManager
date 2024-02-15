@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import { AllTurniersContext } from "../global/turnierProvider";
-import { AllTurniersType, TurnierDataType } from "../global/types";
+import { AllTurniersContext } from "../../global/turnierProvider";
+import { AllTurniersType, TurnierDataType } from "../../global/types";
 
 export const TurnierHistoryList = ({ setIndex, setOpenTurnier }) => {
   const { allTurniers, setAllTurniers }: AllTurniersType =

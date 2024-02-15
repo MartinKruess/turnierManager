@@ -13,6 +13,7 @@ export const AllTurniersContext = createContext<AllTurniersType>(
   {} as AllTurniersType
 );
 
+// Collection of TurnierData, Teams and Rounds for a single Turnier
 export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
   const [turnierData, setTurnierData] = useState<TurnierDataType>({
     turnier: {
@@ -46,6 +47,7 @@ export const TurnierProvider: React.FC<ProviderProps> = ({ children }) => {
   );
 };
 
+// Collection of all Turniers
 export const AllTurniersProvider: React.FC<ProviderProps> = ({ children }) => {
   const [allTurniers, setAllTurniers] = useState<TurnierDataType[]>([]);
 

@@ -1,103 +1,35 @@
 import { useContext, useEffect } from "react";
 import { AllTurniersContext, TurnierContext } from "../global/turnierProvider";
-import { TeamPreview } from "../comps/teamPreview";
-import { AllTurniersType, TurnierDataType } from "../global/types";
+import { TeamPreview } from "../comps/addTeam/teamPreview";
+import { createTeam } from "../comps/addTeam/addNewTeam";
+import { openTurnier } from "../comps/addTeam/addTeamToTurnier";
 
 export const AddTeam = () => {
   const { turnierData, setTurnierData } = useContext(TurnierContext);
   const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
 
+  const teamsize = turnierData.turnier.teamsize;
   useEffect(() => {
     localStorage.setItem("turnierData", JSON.stringify(turnierData));
   }, [turnierData]);
-  const teamsize = turnierData.turnier.teamsize;
 
   useEffect(() => {
     localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
   }, [allTurniers]);
-
-  const createTeam = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formElement = e.target as HTMLFormElement;
-
-    const newTeam = {
-      teamName: formElement.teamName.value,
-      wins: 0,
-      teampoints: 0,
-      player1: {
-        playerName: formElement.playerName1.value,
-        playerRank: formElement.playerRank1.value,
-        goals: 0,
-        assists: 0,
-        defs: 0,
-        points: 0,
-      },
-      player2: {
-        playerName:
-          teamsize === "duo" || teamsize === "trio"
-            ? formElement.playerName2.value
-            : "",
-        playerRank:
-          teamsize === "duo" || teamsize === "trio"
-            ? formElement.playerRank2.value
-            : "",
-        goals: 0,
-        assists: 0,
-        defs: 0,
-        points: 0,
-      },
-      player3: {
-        playerName: teamsize === "trio" ? formElement.playerName3.value : "",
-        playerRank: teamsize === "trio" ? formElement.playerRank3.value : "",
-        goals: 0,
-        assists: 0,
-        defs: 0,
-        points: 0,
-      },
-    };
-    turnierData.teams.length < 32 &&
-      setTurnierData({
-        ...turnierData,
-        teams: [...turnierData.teams, newTeam],
-      });
-  };
-
-  const openTurnier = () => {
-    // mix Teams
-    const teams = turnierData.teams;
-    teams.sort(() => Math.random() - 0.5);
-    turnierData.rounds[0] = teams;
-
-    if (allTurniers === null) {
-      setAllTurniers([turnierData]);
-    } else {
-      setAllTurniers([...allTurniers, turnierData]);
-    }
-    setTurnierData({
-      turnier: {
-        turnierName: "",
-        playerStats: false,
-        startDate: "",
-        teamsize: "",
-        status: false,
-        bestOf: 0,
-      },
-      teams: [],
-      rounds: [[], [], [], [], []],
-      winner: [],
-    });
-    localStorage.removeItem("turnierData");
-    localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
-  };
 
   return (
     <main>
       {turnierData.turnier.turnierName ? (
         <section className="teamSection">
           {turnierData.teams.length === 32 ? (
-            <h2>Das Turnier ist voll!</h2>
+            <h2 className="newTeam">Das Turnier ist voll!</h2>
           ) : (
-            <form className="newTeam" onSubmit={(e) => createTeam(e)}>
+            <form
+              className="newTeam"
+              onSubmit={(e) =>
+                createTeam(e, teamsize, turnierData, setTurnierData)
+              }
+            >
               <input type="text" name="teamName" placeholder="Teamname" />
               <input
                 type="text"
@@ -155,7 +87,14 @@ export const AddTeam = () => {
         <section>
           <button
             title="Nach dem starten des Turnieres ist eine weitere bearbeitung nicht möglich!"
-            onClick={() => openTurnier()}
+            onClick={() =>
+              openTurnier(
+                turnierData,
+                setTurnierData,
+                allTurniers,
+                setAllTurniers
+              )
+            }
           >
             Alle Teams eingetragen
           </button>

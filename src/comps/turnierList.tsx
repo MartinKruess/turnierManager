@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { AllTurniersType, TurnierDataType } from "../global/types";
-import { DuellModal } from "./modal";
 
 export const TurnierList = ({ setIndex, setOpenTurnier }) => {
   const { allTurniers, setAllTurniers }: AllTurniersType =
@@ -37,7 +36,7 @@ export const TurnierList = ({ setIndex, setOpenTurnier }) => {
         <div>Starten</div>
         <div>Beenden</div>
       </article>
-      <DuellModal />
+
       {allTurniers && allTurniers.find((turnier) => turnier.turnier.status) ? (
         allTurniers.map((turnier: TurnierDataType, i: number) => {
           return (

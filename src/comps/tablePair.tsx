@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { Winner } from "./winner";
+import { DuellModal } from "./modal";
+import { winHandler } from "./winHandler";
 
 interface TurnierIndexProp {
   index: number;
@@ -24,40 +26,9 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
   //   return points;
   // }
 
-  const winHandler = (e, team) => {
-    team.wins = e.target.value;
-    team.allWins = Number(team.allWins) + Number(e.target.value);
-
-    // Auswertung der Wins/Runde
-    if (
-      currentRounds[count][currentRounds[count].length - 1].wins >
-        currentData.bestOf / 2 ||
-      currentRounds[count][currentRounds[count].length - 2].wins >
-        currentData.bestOf / 2
-    ) {
-      if (currentRounds[count].length > 2) {
-        currentRounds[count + 1] = currentRounds[count].filter((team) => {
-          if (team.wins > currentData.bestOf / 2) {
-            team.wins = 0;
-            return team;
-          }
-        });
-      } else {
-        currentTurnier.winner = currentRounds[count].filter((team) => {
-          if (team.wins > currentData.bestOf / 2) {
-            team.wins = 0;
-            return team;
-          }
-        });
-      }
-
-      setCount(count + 1);
-      localStorage.setItem("allTurniers", JSON.stringify(allTurniers));
-    }
-  };
-
   return (
     <article className="turnierTree">
+      {/* <DuellModal /> */}
       {currentRounds.map((round, i) => (
         <div
           className={
@@ -76,7 +47,18 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
                 <input
                   type="text"
                   className="win"
-                  onChange={(e) => winHandler(e, team)}
+                  onChange={(e) =>
+                    winHandler(
+                      e,
+                      team,
+                      allTurniers,
+                      currentTurnier,
+                      currentRounds,
+                      currentData,
+                      count,
+                      setCount
+                    )
+                  }
                 />
               </div>
             ) : (
@@ -86,7 +68,18 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
                   <input
                     type="text"
                     className="win"
-                    onChange={(e) => winHandler(e, team)}
+                    onChange={(e) =>
+                      winHandler(
+                        e,
+                        team,
+                        allTurniers,
+                        currentTurnier,
+                        currentRounds,
+                        currentData,
+                        count,
+                        setCount
+                      )
+                    }
                   />
                 </div>
               </div>
