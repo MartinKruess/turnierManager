@@ -1,11 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { TurnierContext } from "../global/turnierProvider";
-import {
-  AllTurnierDataType,
-  TurnierDataType,
-  TurnierType,
-} from "../global/types";
 import { ThemeContext } from "../global/themeProvider";
+import { submitHandler } from "../comps/addTurnier/turnierHandler";
+import { roundHandler } from "../comps/addTurnier/roundHandler";
 
 export const NewTurnier = () => {
   const [rounds, setRounds] = useState(1);
@@ -18,40 +15,16 @@ export const NewTurnier = () => {
 
   useEffect(() => {}, [rounds]);
 
-  const roundHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formElement = e.target as HTMLFormElement;
-    console.log(formElement.value);
-    setRounds(Number(formElement.value));
-  };
-
-  const submitHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formElement = e.target as HTMLFormElement;
-    const dateRaw = formElement.startDate.value;
-    const dateArr = dateRaw.split("-").reverse();
-    const date = dateArr.join(".");
-
-    const turnier: TurnierType = {
-      turnierName: formElement.turnierName.value,
-      startDate: date,
-      teamsize: formElement.teamsize.value,
-      playerStats: formElement.playerStats.checked,
-      bestOf: rounds,
-      status: true,
-    };
-    if (!turnierData[0]) {
-      console.log(turnierData);
-      setTurnierData({ ...turnierData, turnier: turnier });
-    }
-  };
-
   return (
     <main>
       {turnierData.turnier.turnierName ? (
         <h2>Die Erstellung des Turniers läuft noch!</h2>
       ) : (
-        <form onSubmit={(e) => submitHandler(e)}>
+        <form
+          onSubmit={(e) =>
+            submitHandler(e, rounds, turnierData, setTurnierData)
+          }
+        >
           <input
             type="text"
             placeholder="Name des Turniers"
@@ -81,20 +54,11 @@ export const NewTurnier = () => {
             Spielerstatistik on/off
             <input type="checkbox" name="playerStats" id="stats" />
           </label>
-          {/* <label
-            htmlFor="bestOf"
-            title="1: Ko-System ab Viertelfinale best of 3 | 3: Best of 3 ab Viertelfinale best of 5 |  5: Best of 5 ab Viertelfinale best of 7"
+          <select
+            name=""
+            id="matches"
+            onChange={(e) => roundHandler(e, setRounds)}
           >
-            Best of {rounds} ab Viertelfinale best of {rounds + 2}
-            <input
-              type="number"
-              name=""
-              id="bestOf"
-              onChange={(e) => roundHandler(e)}
-              value={rounds}
-            />
-          </label> */}
-          <select name="" id="matches" onChange={(e) => roundHandler(e)}>
             <option value="1">K.O- System</option>
             <option value="3">Best of 3</option>
             {theme === "cod" && <option value="5">Best of 5</option>}

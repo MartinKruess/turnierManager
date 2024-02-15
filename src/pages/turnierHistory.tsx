@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { TurnierHistoryList } from "../comps/turnierHistoryList";
-import { TurnierHistoryData } from "../comps/turnierHistoryDate";
+import { TurnierHistoryList } from "../comps/history/turnierHistoryList";
+import { TurnierHistoryData } from "../comps/history/turnierHistoryDate";
 
 export const TurnierHistoryListContainer = () => {
   const [openTurnier, setOpenTurnier] = useState(false);

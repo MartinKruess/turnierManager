@@ -1,4 +1,4 @@
-export const DuellModal = (props) => {
+export const DuellModal = () => {
   return (
     <div className="modal">
       <div className="neonTextRed leftBox">
@@ -7,6 +7,12 @@ export const DuellModal = (props) => {
       <h1 className="neonText center">VS</h1>
       <div className="neonTextBlue rightBox">
         <p>BambusBären</p>
+      </div>
+      <div>
+        <label htmlFor="player1"></label>
+        <input type="text" id="player1" />
+        <label htmlFor="player2"></label>
+        <input type="text" id="player2" />
       </div>
     </div>
   );

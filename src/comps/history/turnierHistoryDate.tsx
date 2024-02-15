@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AllTurniersContext } from "../global/turnierProvider";
+import { AllTurniersContext } from "../../global/turnierProvider";
 
 export const TurnierHistoryData = ({ index }) => {
   const { allTurniers } = useContext(AllTurniersContext);
