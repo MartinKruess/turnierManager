@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { AllTurniersContext } from "../global/turnierProvider";
 import { Winner } from "./winner";
-import { DuellModal } from "./modal";
-import { winHandler } from "./winHandler";
+import { DuellModal } from "./turnierHandler/modal";
+import { winHandler } from "./turnierHandler/winHandler";
 
 interface TurnierIndexProp {
   index: number;
