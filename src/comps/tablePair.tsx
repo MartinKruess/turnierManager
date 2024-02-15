@@ -9,7 +9,7 @@ interface TurnierIndexProp {
 }
 
 export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
-  const { allTurniers, setAllTurniers } = useContext(AllTurniersContext);
+  const { allTurniers } = useContext(AllTurniersContext);
 
   // Data of the current Turnier
   const currentTurnier = allTurniers[index];
@@ -28,7 +28,7 @@ export const TurnierTable: React.FC<TurnierIndexProp> = ({ index }) => {
 
   return (
     <article className="turnierTree">
-      {/* <DuellModal /> */}
+      {count === 6 && <DuellModal />}
       {currentRounds.map((round, i) => (
         <div
           className={

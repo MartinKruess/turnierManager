@@ -1,4 +1,4 @@
-export const DuellModal = (props) => {
+export const DuellModal = () => {
   return (
     <div className="modal">
       <div className="neonTextRed leftBox">
